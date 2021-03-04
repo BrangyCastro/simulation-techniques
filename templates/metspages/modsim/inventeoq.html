@@ -1,0 +1,118 @@
+{% extends "layout2.html" %}
+
+{% block content %}
+<div class="container demo-1">
+  <!-- Codrops top bar -->
+  <div class="codrops-top clearfix">
+    <span class="right"><a href="/static/ManualDeUsuario.pdf" target="_blank" ><strong>Manual de uso</strong></a></span>
+  </div>
+  <!--/ Codrops top bar -->
+  <header class="clearfix">
+
+    <h1 id="texthead"> Inventario para empresa </h1>
+    <div class="right">
+      <div id="dl-menu" class="dl-menuwrapper">
+        <button class="dl-trigger">Open Menu</button>
+        <ul class="dl-menu">
+          <li>
+            <a href="#">Modelo de Inventario</a>
+            <ul class="dl-submenu">
+              <li>
+                <a href="{{ url_for('modsim_api.inventario_EOQ') }}">Inventario EOQ</a>
+              </li>
+              <li>
+                <a href="{{ url_for('modsim_api.inventario_general') }}">Tabla de inventario general</a>
+              </li>
+              <li>
+                <a href="{{ url_for('modsim_api.inventario_empresa') }}">Tabla de inventario para caso real</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="{{ url_for('modsim_api.linea_espera') }}">Modelo de linea de espera</a>
+          </li>
+        </ul>
+      </div><!-- /dl-menuwrapper -->
+    </div>
+  </header>
+  <div class="main clearfix">
+    <form method=post action="">
+      <div class="column">
+        <table>
+          {% for field in form %}
+          <tr>
+            <td>{{ field.label }}</td>
+          </tr>
+          <tr>
+            <td>{{ field }}</td>
+          </tr>
+          {% endfor %}
+          <td>
+            <input type=submit value=Calcular>
+    </form>
+    <form method="get" action="{{ url_for('index5') }}">
+      <button type="submit">Regresar</button>
+    </form>
+    </td>
+    </table>
+
+  </div>
+  <div class="column">
+    <p>
+      Se trata en determinar con que frecuencia y en que cantidad se debe reabastecer el
+      inventario de manera que se minimice la suma de los costos por unidad de tiempo.
+      Tenemos varias relaciones matemáticas como son:
+      \[ Número \ anual \ de \ pedidos: \ N = D/Q \]
+      \[ Inventario \ promedio \ anual: \ Q/2 \]
+      \[ Costo \ anual \ de \ mantener \ el \ inventario: \ ChT = Q/2 * Ch \]
+      \[ Costo \ anual \ de \ hacer \ los \ pedidos: \ CoT = D/Q* Co \]
+      \[ Costo \ total \ de \ inventario: \ MO(Q) = ChT + CoT \]
+      \[ Tiempo \ entre \ pedidos: \ T = Q/D \]
+      Donde \( N \) es el número de pedidos, \(T\) el tiempo entre pedidos, \(D\) es la demanda, \(Q\) la cantidad
+      óptima de pedido,
+      \(Ch\) el costo de mantener y \(ChT\) el costo anual de mantener, \(Co\) el costo de ordenar y \(CoT\)
+      el costo anual de ordenar, y por último, \(MO(Q)\) el costo mínimo total.
+      \[ \]
+      {% if D != None %}
+      Para los datos ingresados se tienen los siguientes resultados:
+      \[ Cantidad \ optima \ de \ pedidos \ = {{dato1}} \]
+      \[ Costo \ total \ de \ ordenar \ = {{dato2}} \]
+      \[ Costo \ total \ de \ mantener \ el \ inventario \ = {{dato3}} \]
+      \[ Costo \ total \ de \ inventario: \ = {{dato4}} \]
+      \[ Costo \ total \ del \ sistema \ de \ inventario \ = {{dato5}} \]
+      \[ Número \ total \ de \ pedidos \ = {{dato6}} \]
+      \[ Punto \ de \ reorden \ = {{dato7}} \]
+      \[ Tiempo de \ pedido \ = {{dato8}} \]
+
+      {% endif %}
+    </p>
+  </div>
+</div>
+<div class="main clearfix">
+  <div>
+    {% if D != None %}
+    <h2>Tabla de costos</h2>
+    {% for table in tables %}
+    {{ table|safe }}
+    {% endfor %}
+    {% endif %}
+  </div>
+  <div>
+    {% if D != None %}
+    <h2>Gráfico comparativo de costos</h2>
+    <img src="{{ grafica }}" width="900">
+
+    {% endif %}
+  </div>
+</div>
+</div><!-- /container -->
+<style>
+  img {
+    display: block;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+  }
+</style>
+{% endblock %}

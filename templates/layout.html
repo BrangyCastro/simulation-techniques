@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Técnicas de simulación</title>
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico"> 
+		
+		<link rel="stylesheet" type="text/css" href="/static/css/default.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/component.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/solvers.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/df_style.css" />
+		<script src="/static/js/modernizr.custom.js"></script>
+
+
+		 <!-- plugins styles -->
+		 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Baloo+2:400,500,600,700,800%7CLato:100,300,400,700,900%7COpen+Sans:300,400,600,700,800%7CRoboto:300,400,500,700,900%7CRubik:300,400,500,700,900&display=swap">
+		 <link rel="stylesheet" href="/static/assets/css/animate.css">
+		 <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+		 <link rel="stylesheet" href="/static/assets/css/bootstrap-datepicker.min.css">
+		 <link rel="stylesheet" href="/static/assets/css/bootstrap-select.min.css">
+		 <link rel="stylesheet" href="/static/assets/css/fontawesome-all.min.css">
+		 <link rel="stylesheet" href="/static/assets/css/hover-min.css">
+		 <link rel="stylesheet" href="/static/assets/css/swiper.min.css">
+		 <link rel="stylesheet" href="/static/assets/css/jquery.mCustomScrollbar.min.css">
+		 <link rel="stylesheet" href="/static/assets/css/magnific-popup.css">
+		 <link rel="stylesheet" href="/static/assets/css/owl.carousel.min.css">
+		 <link rel="stylesheet" href="/static/assets/css/owl.theme.default.min.css">
+		 <link rel="stylesheet" href="/static/assets/css/oberlin-icons.css">
+	 
+		 <!-- template styles -->
+		 <link rel="stylesheet" href="/static/assets/css/style.css">
+		 <link rel="stylesheet" href="/static/assets/css/responsive.css">
+	</head>
+	<body>
+		
+		<div class="page-wrapper">
+			<section class="topbar-one topbar-one__inner-page">
+				<div class="container">
+					<div class="topbar-one__left">
+						<div class="topbar-one__social">
+							<a href="https://www.facebook.com/brangy.castro/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+							<a href="https://twitter.com/BrangyC" target="_blank"><i class="fab fa-twitter"></i></a>
+							<a href="https://github.com/BrangyCastro" target="_blank"><i class="fab fa-github"></i></a>
+						</div><!-- /.topbar-one__social -->
+						<a href="/static/ManualDeUsuario.pdf"  target="_blank">Manuel de usuario</a>
+					</div><!-- /.topbar-one__left -->
+				</div><!-- /.container -->
+			</section><!-- /.topbar-one -->
+			<nav class="main-nav-one main-nav-one__inner-page stricky">
+				<div class="container">
+					<div class="inner-container">
+						<div class="logo-box">
+							<a href="/" class="main-nav-one__logo">
+								<img src="/static/assets/images/light-logo-1-2.png" class="main-nav-one__main-logo" alt="">
+								<img src="/static/assets/images/dark-logo-1-1.png" width="219" class="main-nav-one__mobile-logo"
+									alt="">
+							</a>
+						</div><!-- /.logo-box -->
+						<div class="main-nav__main-navigation">
+							<ul class="main-nav__navigation-box">
+								<li class="dropdown">
+									<a href="/">Randoms</a>
+									<ul>
+										<li><a href="{{ url_for('metran_api.cuadrado_medio') }}">Cuadrado medio</a></li>
+										<li><a href="{{ url_for('metran_api.congruencial_aditivo') }}">Congruencial aditivo</a></li>
+										<li class="dropdown">
+											<a href="#">Congruencial multiplicativo</a>
+											<ul>
+												<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_autogenerado') }}">Autogenerar valores</a></li>
+												<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_30264') }}">generador excel-03 mod 30264</a></li>
+												<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_30307') }}">generador excel-07 mod 30307</a></li>
+												<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_30323') }}">generador excel-07 mod 30323</a></li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a href="{{ url_for('index2') }}">Probabilísticos</a>
+									<ul>
+										<li><a href="{{ url_for('metprob_api.promedio_movil') }}">Promedio Movil</a></li>
+										<li><a href="{{ url_for('metprob_api.alisamiento_exponencial') }}">Alisamiento Exponencial</a></li>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a href="{{ url_for('index3') }}">Regresión</a>
+									<ul>
+										<li><a href="{{ url_for('metreg_api.regresion_lineal') }}">Lineal</a></li>
+										<li><a href="{{ url_for('metreg_api.regresion_no_lineal') }}">No Lineal</a></li>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a href="{{ url_for('index4') }}">Simulación</a>
+									<ul>
+										<li class="dropdown">
+											<a href="#">Método Monte Carlo</a>
+											<ul>
+												<li><a href="{{ url_for('metsim_api.montecarlo_aditivo') }}">Por congruencial aditivo</a></li>
+												<li><a href="{{ url_for('metsim_api.montecarlo_multiplicativo') }}">Por congruencial multiplicativo</a></li>
+											</ul>
+										</li>
+										<li class="dropdown">
+											<a href="#">Método de la transformada inversa</a>
+											<ul>
+												<li><a href="{{ url_for('metsim_api.transformada_inversa_aditivo') }}">Por congruencial aditivo</a></li>
+												<li><a href="{{ url_for('metsim_api.transformada_inversa_multiplicativo') }}">Por congruencial multiplicativo</a></li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a href="{{ url_for('index5') }}">Modelos de simulación</a>
+									<ul>
+										<li class="dropdown">
+											<a href="#">Modelos de inventario</a>
+											<ul>
+												<li><a href="{{ url_for('modsim_api.inventario_EOQ') }}">Modelo EOQ</a></li>
+												<li><a href="{{ url_for('modsim_api.inventario_general') }}">Simulación del inventario</a></li>
+												<li><a href="{{ url_for('modsim_api.inventario_empresa') }}">Tabla de inventario para caso real</a></li>
+											</ul>
+										</li>
+										<li class="dropdown">
+											<a href="#">Modelo de linea de espera</a>
+											<ul>
+												<li><a href="{{ url_for('modsim_api.linea_espera') }}">Valores autogenerados</a></li>
+												<li><a href="{{ url_for('modsim_api.linea_espera_aditivo') }}">Por congruencial aditivo</a></li>
+												<li><a href="{{ url_for('modsim_api.linea_espera_multiplicativo') }}">Por congruencial multiplicativo</a></li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul><!-- /.main-nav__navigation-box -->
+						</div><!-- /.main-nav__main-navigation -->
+					</div><!-- /.inner-container -->
+				</div><!-- /.container -->
+			</nav><!-- /.main-nav-one -->
+				{% block content %}
+				{% endblock %}
+			<footer class="site-footer">
+				<div class="site-footer__upper">
+					<div class="container">
+						<img src="/static/assets/images/shapes/upper-footer-shape-1-1.png" class="site-footer__upper-moc" alt="">
+						<div class="site-footer__logo">
+							<a href="index.html"><img src="/static/assets/images/light-logo-1-1.png" width="219" alt=""></a>
+						</div><!-- /.site-footer__logo -->
+						<div class="site-footer__social">
+							<a href="https://www.facebook.com/brangy.castro/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+							<a href="https://twitter.com/BrangyC" target="_blank"><i class="fab fa-twitter"></i></a>
+							<a href="https://github.com/BrangyCastro" target="_blank"><i class="fab fa-github"></i></a>
+						</div><!-- /.site-footer__social -->
+					</div><!-- /.container -->
+				</div><!-- /.site-footer__upper -->
+				<div class="site-footer__main">
+					<div class="container">
+						<div class="row">
+							<div class="col-xl-4 col-lg-6 col-md-5">
+								<div class="footer-widget footer-widget__about">
+									<h3 class="footer-widget__title">Estudiante</h3><!-- /.footer-widget__title -->
+									<p>CASTRO VARA BRANGY GABRIEL</p>
+									<p>FACCI - 2021</p>
+								</div><!-- /.footer-widget -->
+							</div><!-- /.col-xl-4 col-lg-6 col-md-5 -->
+							<div class="col-xl-3 col-lg-6 col-md-5">
+								<div class="footer-widget footer-widget__about">
+									<h3 class="footer-widget__title">Profesor</h3><!-- /.footer-widget__title -->
+									<p>Ing. Jorge Moya</p>
+									<p>FACCI - 2021</p>
+								</div><!-- /.footer-widget -->
+							</div><!-- /.col-xl-4 col-lg-6 col-md-5 -->
+							<div class="col-xl-2 col-lg-6 col-md-5">
+								<div class="footer-widget footer-widget__links">
+									<h3 class="footer-widget__title">Páginas</h3><!-- /.footer-widget__title -->
+									<ul class="list-unstyled footer-widget__links-list">
+										<li><a href="/">Randoms</a></li>
+										<li><a href="{{ url_for('index2') }}">Probabilísticos</a></li>
+										<li><a href="{{ url_for('index3') }}">Regresión</a></li>
+										<li><a href="{{ url_for('index4') }}">Simulación</a></li>
+										<li><a href="{{ url_for('index5') }}">Modelos de simulación</a></li>
+									</ul><!-- /.list-unstyled footer-widget__links-list -->
+								</div><!-- /.footer-widget footer-widget__links -->
+							</div><!-- /.col-xl-2 col-lg-6 col-md-5 -->
+							<div class="col-xl-3 col-lg-6 col-md-5">
+								<div class="footer-widget footer-widget__contact">
+									<h3 class="footer-widget__title">Contacts</h3><!-- /.footer-widget__title -->
+									<p>Crucita - Portoviejo <br> Manabí - Ecuador</p>
+									<p><a href="tel:+593 96949983">+593 96949983</a></p>
+									<p><a href="mailto:brangy.castro1@gmail.com">brangy.castro1@gmail.com</a></p>
+								</div><!-- /.footer-widget footer-widget__contact -->
+							</div><!-- /.col-xl-3 col-lg-6 col-md-5 -->
+						</div><!-- /.row -->
+					</div><!-- /.container -->
+				</div><!-- /.site-footer__main -->
+				<div class="site-footer__bottom">
+					<div class="container">
+						<p>Brangy Castro <i class="far fa-copyright"></i> 2021 All Right Reserved</p>
+					</div><!-- /.container -->
+				</div><!-- /.site-footer__bottom -->
+			</footer><!-- /.site-footer -->
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		
+		 <!-- template scripts -->
+		<script src="/static/assets/js/jquery.min.js"></script>
+		<script src="/static/assets/js/bootstrap.bundle.min.js"></script>
+		<script src="/static/assets/js/bootstrap-datepicker.min.js"></script>
+		<script src="/static/assets/js/bootstrap-select.min.js"></script>
+		<script src="/static/assets/js/isotope.js"></script>
+		<script src="/static/assets/js/jquery.ajaxchimp.min.js"></script>
+		<script src="/static/assets/js/jquery.circleType.js"></script>
+		<script src="/static/assets/js/waypoints.min.js"></script>
+		<script src="/static/assets/js/jquery.counterup.min.js"></script>
+		<script src="/static/assets/js/jquery.lettering.min.js"></script>
+		<script src="/static/assets/js/jquery.magnific-popup.min.js"></script>
+		<script src="/static/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+		<script src="/static/assets/js/jquery.validate.min.js"></script>
+		<script src="/static/assets/js/owl.carousel.min.js"></script>
+		<script src="/static/assets/js/TweenMax.min.js"></script>
+		<script src="/static/assets/js/wow.min.js"></script>
+		<script src="/static/assets/js/theme.js"></script>
+	</body>
+</html>

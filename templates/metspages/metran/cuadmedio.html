@@ -1,0 +1,76 @@
+{% extends "layout2.html" %}
+
+{% block content %}
+	<section class="page-header page-header__dark"
+        style="background-image: url(/static/assets/images/background/random-bg.jpg);">
+        <div class="container">
+            <h2>Método del cuadrado medio</h2>
+            <ul class="list-unstyled thm-breadcrumb">
+                <li><a href="/">Métodos Randoms</a></li>
+                <li><span>Método cuadrado medio</span></li>
+            </ul><!-- /.list-unstyled -->
+        </div><!-- /.container -->
+    </section><!-- /.page-header -->
+	<section class="living-option-one">
+		<div class="container">
+			<div class="mb-4">
+				<div class="tab-pane animated fadeInUp fade show">
+					<div class="row">
+						<div class="col-lg-6">
+							<form method=post action="">
+								{% for field in form %}
+									<div class="form-group">
+										<label for="exampleInputEmail1">{{ field.label }}</label>
+										{{ field }}
+									</div>
+								{% endfor %}
+								<!-- <input type=submit value=Calcular class="btn btn-primary"> -->
+								<button type="submit" class="btn btn-success">Calcular</button>
+							</form>
+						</div><!-- /.col-lg-6 -->
+						<div class="col-lg-6">
+							<div class="living-option-one__content">
+								<p>En este método cada número sucesivo se genera tomando los <strong>\(n\)</strong> dígitos centrales del cuadrado del
+									número anterior de \(n\) dígitos.
+									{% if N != None %}
+										Para los datos ingresados, el valor inicial de \({{ res }}\) pasamos a elevarlo al cuadrado \[{{ res }}^2 =
+										{{ res2 }} \] luego tomamos
+										los valores medios de el resultado y los dividimos para 10 elevado a la cantidad de unidades que
+										se ingresaron inicialmente dándonos así el resultado de nuestro número pseudoaleatorio
+										\[ { {{ res3 }} \over 10^{{ res5 }} }= {{ res4 }} \] repetimos el proceso con los números medios que sacamos
+										anteriormente
+										e iteramos la cantidad de veces requeridas.
+									{% endif %}
+								</p>
+							</div><!-- /.living-option-one__content -->
+						</div><!-- /.col-lg-6 -->
+					</div><!-- /.row -->
+				</div>
+			</div>
+			<div class="mt-4">
+				<div class="tab-pane animated fadeInUp fade show">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="living-option-one__content">
+								{% if N != None %}
+									<h3> Tabla de valores randoms</h3>
+									{% for table in tables %}
+										{{ table|safe }}
+									{% endfor %}
+								{% endif %}
+							</div>
+						</div><!-- /.col-lg-6 -->
+						<div class="col-lg-6">
+							<div class="living-option-one__content">
+								{% if N != None %}
+									<h3>Gráfica de los números aleatorios generados</h3>
+									<img src="{{ grafica }}" width="550">
+								{% endif %}
+							</div><!-- /.living-option-one__content -->
+						</div><!-- /.col-lg-6 -->
+					</div><!-- /.row -->
+				</div>
+			</div>
+		</div><!-- /.container -->
+	</section><!-- /.living-option-one -->
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "layout2.html" %}
+
+{% block content %}
+  <section class="page-header page-header__dark"
+        style="background-image: url(/static/assets/images/background/random-bg.jpg);">
+        <div class="container">
+            <h2>Método congruencial aditivo</h2>
+            <ul class="list-unstyled thm-breadcrumb">
+                <li><a href="/">Métodos Randoms</a></li>
+                <li><span>Método congruencial aditivo</span></li>
+            </ul><!-- /.list-unstyled -->
+        </div><!-- /.container -->
+    </section><!-- /.page-header -->
+    <section class="living-option-one">
+      <div class="container">
+        <div class="mb-4">
+          <div class="tab-pane animated fadeInUp fade show">
+            <div class="row">
+              <div class="col-lg-6">
+                <form method=post action="">
+                  {% for field in form %}
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">{{ field.label }}</label>
+                      {{ field }}
+                    </div>
+                  {% endfor %}
+                  <!-- <input type=submit value=Calcular class="btn btn-primary"> -->
+                  <button type="submit" class="btn btn-success">Calcular</button>
+                </form>
+              </div>
+              <div class="col-lg-6">
+                <div class="living-option-one__content">
+                  <p>
+                    Primeramente este algoritmo requiere una secuencia previa de \(n\) números enteros \(x1, x2, x3...xn\) para
+                    generar una
+                    nueva secuencia de números enteros que empiezan en \(xn+1, xn+2, xn+3...\). Su ecuación recursiva es:
+                    \[ Xi = (Xi-1, + Xi-n)mod(m) \ i=n+1,n+2,n+3,....,N \]
+              
+                    {% if N != None %}
+                    Teniendo los datos iniciales se procede a multiplicar la semilla con el multiplicador, para luego sumarle el
+                    incremento:
+                    \[ ({{ X0 }} * {{ A }}) + {{ C }} = {{ res1 }} \]
+                    A este se le aplica el módulo que designamos, el cual nos va a dejar solo el residuo de la división realizada por
+                    este,
+                    con esto habremos descubierto cual es nuestro valor pseudorandómico y nuestra nueva semilla para la siguiente
+                    iteración:
+                    \[ { {{ res1 }} \over {{ M }} }= {{ res2 }} \qquad {{ res2 }}* {{ M }} = {{ res1 }}\]
+                    Esto se puede apreciar de mejor manera en la siguiente iteración como se ve a continuación usando la nueva
+                    semilla:
+                    \[ ({{ res1 }} * {{ A }}) = {{ res3 }} \qquad { {{ res3 }} \over {{ M }} }= {{ res5 }} = {{ res4 }} \]
+                    De ahí solo hay que repetir el proceso las veces necesarias teniendo en cuenta el reemplazar la semilla en cada
+                    iteracion.
+              
+                    {% endif %}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <div class="tab-pane animated fadeInUp fade show">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="living-option-one__content">
+                  {% if N != None %}
+                    <h3> Tabla de valores randoms</h3>
+                    {% for table in tables %}
+                      {{ table|safe }}
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="living-option-one__content">
+                  {% if N != None %}
+                    <h3>Gráfica de los números aleatorios generados</h3>
+                    <img src="{{ grafica }}" width="550">
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

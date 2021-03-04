@@ -1,0 +1,112 @@
+{% extends "layout2.html" %}
+
+{% block content %}
+<div class="container demo-1">
+  <!-- Codrops top bar -->
+  <div class="codrops-top clearfix">
+    <span class="right"><a href="/static/ManualDeUsuario.pdf" target="_blank" ><strong>Manual de uso</strong></a></span>
+  </div>
+  <!--/ Codrops top bar -->
+  <header class="clearfix">
+
+    <h1 id="texthead"> Monte carlo </h1>
+    <div class="right">
+      <div id="dl-menu" class="dl-menuwrapper">
+        <button class="dl-trigger">Open Menu</button>
+        <ul class="dl-menu">
+          <li>
+            <a href="#">Método Monte Carlo</a>
+            <ul class="dl-submenu">
+              <li>
+                <a href="{{ url_for('metsim_api.montecarlo_aditivo') }}">Por congruencial aditivo</a>
+              </li>
+              <li>
+                <a href="{{ url_for('metsim_api.montecarlo_multiplicativo') }}">Por congruencial multiplicativo</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">Método de la transformada inversa</a>
+            <ul class="dl-submenu">
+              <li><a href="{{ url_for('metsim_api.transformada_inversa_aditivo') }}">Por congruencial aditivo</a></li>
+              <li><a href="{{ url_for('metsim_api.transformada_inversa_multiplicativo') }}">Por congruencial
+                  multiplicativo</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /dl-menuwrapper -->
+    </div>
+  </header>
+  <div class="main clearfix">
+    <form method=post action="">
+      <div class="column">
+        <table>
+          {% for field in form %}
+          <tr>
+            <td>{{ field.label }}</td>
+          </tr>
+          <tr>
+            <td>{{ field }}</td>
+          </tr>
+          {% endfor %}
+          <td>
+            <input type=submit value=Calcular>
+    </form>
+    <form method="get" action="{{ url_for('index4') }}">
+      <button type="submit">Regresar</button>
+    </form>
+    </td>
+    </table>
+
+  </div>
+  <div class="column">
+    <p>
+
+      El método de Montecarlo abarcan una colección de técnicas que permiten obtener soluciones de problemas matemáticos
+      o
+      físicos por medio de pruebas aleatorias repetidas. Es por esto que no se le puede asignar una fórmula general,
+      sino que se
+      adapta al problema en concreto basandose en los pasos que sigue este método.
+      \[\]
+      {% if N != None %}
+      Para este caso en particular, una vez ingresados los datos sacamos la probabilidad de cada valor, esto se hace
+      sumando
+      todos los valores ingresados primero, para luego dividir cada valor por la suma realizada anteriormente, por
+      ejemplo para el primer dato tenemos:
+      \[ { \sum(datos) \over {{cant}} } = {{suma}} \]
+      \[ { {{vald1}} \over {{suma}} } = {{dfprob}} \]
+      Luego sacamos la \(FPA\) (probabilidad acumulada) y los \(mínimos\) y \(máximos\), donde la \(FPA\) actual va a
+      ser la suma
+      de la probabilidad del dato anterior con la probabilidad del dato actual, mientras que para \(mínimos\) y
+      \(máximos\), el mínimo
+      va a ser la \(FPA\) anterior, y para el máximo la \(FPA\) actual. Todo se puede apreciar mejor en el gráfico.
+      \[\]
+      Por último generamos nuestros números aleatorios por el generador de nuestra preferencia, y buscamos entre que
+      rango se encuentra este número
+      para determinar a que valor corresponde y así generar nuestos datos de la simulación.
+      {% endif %}
+    </p>
+  </div>
+</div>
+<div class="main clearfix">
+  <div class="column">
+    {% if N != None %}
+    <h2>Tabla de probabilidesde mínimas y máximas</h2>
+    {% for table in tables %}
+    {{ table|safe }}
+    {% endfor %}
+    {% endif %}
+  </div>
+  <div class="column">
+    {% if N != None %}
+    <h2>Tabla de la simulación</h2>
+    {% for table in tables2 %}
+    {{ table|safe }}
+    {% endfor %}
+
+    {% endif %}
+  </div>
+</div>
+</div><!-- /container -->
+
+{% endblock %}

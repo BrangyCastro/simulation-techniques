@@ -1,0 +1,112 @@
+{% extends "layout2.html" %}
+
+{% block content %}
+<div class="container demo-1">
+  <!-- Codrops top bar -->
+  <div class="codrops-top clearfix">
+    <span class="right"><a href="/static/ManualDeUsuario.pdf" target="_blank" ><strong>Manual de uso</strong></a></span>
+  </div>
+  <!--/ Codrops top bar -->
+  <header class="clearfix">
+
+    <h1 id="texthead"> Regresión no lineal </h1>
+    <div class="right">
+      <div id="dl-menu" class="dl-menuwrapper">
+        <button class="dl-trigger">Open Menu</button>
+        <ul class="dl-menu">
+          <li>
+            <a href="{{ url_for('metreg_api.regresion_lineal') }}">Regresión Lineal</a>
+          </li>
+          <li>
+            <a href="{{ url_for('metreg_api.regresion_no_lineal') }}">Regresión no Lineal</a>
+          </li>
+        </ul>
+      </div><!-- /dl-menuwrapper -->
+    </div>
+  </header>
+  <div class="main clearfix">
+    <form method=post action="">
+      <div class="column">
+        <table>
+          {% for field in form %}
+          <tr>
+            <td>{{ field.label }}</td>
+          </tr>
+          <tr>
+            <td>{{ field }}</td>
+          </tr>
+          {% endfor %}
+          <td>
+            <input type=submit value=Calcular>
+    </form>
+    <form method="get" action="{{ url_for('index3') }}">
+      <button type="submit">Regresar</button>
+    </form>
+    </td>
+    </table>
+  </div>
+  <div class="column">
+    <p>
+
+
+      La parábola de mínimos cuadrados que aproxima el conjunto de puntos \( (X1,Y1) , (X2,Y2), (X3,Y3),…..(XN,YN) \)
+      tiene ecuación dada por \(y = a_{0} + a_{1}X + a_{2}X^2 \). donde las constantes
+      \(a_{0} , a_{1} , a_{2} \) se determinan al resolver simultáneamente las ecuaciones:
+      \[ \begin{cases} \sum Y = a_{0}N + a_{1}\sum X + a_{2}\sum X^2 \\ \sum XY = a_{0} \sum X + a_{1}\sum X^2 +
+      a_{2}\sum X^3
+      \\ \sum X^2Y = a_{0} \sum X^2 + a_{1}\sum X^3 + a_{2}\sum X^4 \end{cases} \]
+
+      {% if N != None %}
+
+      Al tener nuestra tabla de valores con los datos ingresados tenemos las siguientes sumatorias de cada columna:
+      \[ \sum x = {{ sum1 }} \qquad \sum y = {{ sum2 }} \qquad \sum x^2 = {{ sum3 }} \qquad \sum x^3 = {{ sum4 }} \]
+      \[ \sum x^4 = {{ sum5 }}\qquad \sum xy = {{ sum6 }} \qquad \sum x^2y = {{ sum7 }}\]
+      Lo cual al reemplazar en nuestras ecuaciones nos va a quedar de la siguiente manera:
+
+      \[ \begin{cases} {{ sum2 }} = {{ cant }}a_{0} + {{ sum1 }}a_{1} + {{ sum3 }}a_{2} \\ {{ sum6 }} = {{ sum1 }}a_{0}
+      + {{ sum7 }}a_{1} + {{ sum4 }}a_{2}
+      \\ {{ sum7 }} = {{ sum3 }}a_{0} + {{ sum4 }}a_{1} + {{ sum5 }}a_{2} \end{cases} \]
+
+      Con estos datos ya podemos pasar a usar cualquier método para resolver sistemas de ecuaciones (reducción,
+      sustitución o igualación) para conseguir los valores de nuestras constantes,
+      con lo cual nos quedarán de la siguiente manera:
+
+      \[ \begin{cases} a_{0} = {{ P2 }} \\ a_{1} = {{ P1 }} \\ a_{2} = {{ P0 }} \end{cases} \]
+
+      Y reemplazamos en la ecuación original, donde ya podemos ingresar el dato que queremos predecir para conocer el
+      pronóstico estimado:
+      \(y = {{ P2 }} + {{ P1 }}({{ pron }}) + {{ P0 }}({{ pron }})^2 \)
+      \(Pronóstico \ para \ X {{ pron }} = {{ res }} \)
+
+      {% endif %}
+    </p>
+  </div>
+</div>
+<div>
+  <div>
+    {% if N != None %}
+    <h2>Tabla de resultados</h2>
+    {% for table in tables %}
+    {{ table|safe }}
+    {% endfor %}
+    {% endif %}
+  </div>
+  <div>
+    {% if N != None %}
+    <h2>Gráfica comparativa de ajuste</h2>
+    <img src="{{ grafica }}" width="700">
+
+    {% endif %}
+  </div>
+</div>
+</div><!-- /container -->
+<style>
+  img {
+    display: block;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+  }
+</style>
+{% endblock %}

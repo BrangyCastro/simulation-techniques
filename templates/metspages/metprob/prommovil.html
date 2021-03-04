@@ -1,0 +1,99 @@
+{% extends "layout2.html" %}
+
+{% block content %}
+<div class="container demo-1">
+  <!-- Codrops top bar -->
+  <div class="codrops-top clearfix">
+    <span class="right"><a href="/static/ManualDeUsuario.pdf" target="_blank" ><strong>Manual de uso</strong></a></span>
+  </div>
+  <!--/ Codrops top bar -->
+  <header class="clearfix">
+
+    <h1 id="texthead"> Promedio Movil </h1>
+    <div class="right">
+      <div id="dl-menu" class="dl-menuwrapper">
+        <button class="dl-trigger">Open Menu</button>
+        <ul class="dl-menu">
+          <li>
+            <a href="{{ url_for('metprob_api.promedio_movil') }}">Promedio Movil</a>
+            <a href="{{ url_for('metprob_api.alisamiento_exponencial') }}">Alisamiento Exponencial</a>
+          </li>
+        </ul>
+      </div><!-- /dl-menuwrapper -->
+    </div>
+  </header>
+  <div class="main clearfix">
+    <form method=post action="">
+      <div class="column">
+        <table>
+          {% for field in form %}
+          <tr>
+            <td>{{ field.label }}</td>
+          </tr>
+          <tr>
+            <td>{{ field }}</td>
+          </tr>
+          <td>
+            <input type=submit value=Calcular>
+    </form>
+    <form method="get" action="{{ url_for('index2') }}">
+      <button type="submit">Regresar</button>
+    </form>
+    </td>
+    {% endfor %}
+    </table>
+
+  </div>
+  <div class="column">
+    <p>
+
+      Para sacar el promedio movil usamos la siguiente fómrula:
+      \[ F_{t} = { D_{t-1} + D_{t-2} + D_{t-3} + D_{t-n} \over n } \]
+      Donde \(F_{t}\) es el pronóstico del siguiente periodo, \(D_{t}\) valor observado en el periodo \(t\) y \(n\) el
+      número de periodos
+      a considerar
+      \[\]
+      {% if N != None %}
+      En este caso son promedios de \(3\) y \(4\), con esto sumamos los datos y dividimos para la cantidad de datos
+      sumados:
+      \[ { {{ res1 }} + {{ res2 }} + {{ res3 }} \over {{ 3 }} }= {{ res5 }} \]
+      Y para el promedio cuatro:
+      \[ { {{ res1 }} + {{ res2 }} + {{ res3 }} + {{ res4 }} \over {{ 4 }} }= {{ res6 }} \]
+      Para sacar los errores simplemente restamos el valor actual de ese momento con el promedio sacado:
+      \[ { {{ res3 }} \over {{ res5 }} }= {{ res7 }} \]
+      Y para el error de promedio cuatro:
+      \[ { {{ res4 }} \over {{ res6 }} }= {{ res8 }} \]
+      Y así seguimos hasta llegar al valor que deseamos encontrar sea por un promedio o por el otro.
+
+      {% endif %}
+    </p>
+  </div>
+</div>
+<div >
+  <div >
+    {% if N != None %}
+    <h2>Tabla de promedios</h2>
+    {% for table in tables %}
+    {{ table|safe }}
+    {% endfor %}
+    {% endif %}
+  </div>
+  <div >
+    {% if N != None %}
+    <h2>Gráfica comparativa de promedios</h2>
+    <img src="{{ grafica }}" width="700">
+
+    {% endif %}
+  </div>
+</div>
+</div><!-- /container -->
+<style>
+  img {
+    display: block;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+  }
+</style>
+{% endblock %}

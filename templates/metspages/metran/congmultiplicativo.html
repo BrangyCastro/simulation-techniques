@@ -1,0 +1,99 @@
+{% extends "layout2.html" %}
+
+{% block content %}
+<section class="page-header page-header__dark"
+style="background-image: url(/static/assets/images/background/random-bg.jpg);">
+<div class="container">
+    <h2>Método congruencial Multiplicativo</h2>
+    <ul class="list-unstyled thm-breadcrumb">
+        <li><a href="/">Métodos Randoms</a></li>
+        <li><span>Método congruencial Multiplicativo</span></li>
+    </ul><!-- /.list-unstyled -->
+</div><!-- /.container -->
+</section><!-- /.page-header -->
+<section class="living-option-one">
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+          <a href="{{ url_for('metran_api.congruencial_multiplicativo_autogenerado') }}" class="nav-link { {% if page == 'congmultiplicativo' %} active {% endif %} }" >Autogenerar valores</a>
+      </li><!-- /.nav-item -->
+      <li class="nav-item">
+          <a href="{{ url_for('metran_api.congruencial_multiplicativo_30264') }}" class="nav-link { {% if page == 'congmultiplicativo30264' %} active {% endif %} }">excel-03 mod 30264</a>
+      </li><!-- /.nav-item -->
+      <li class="nav-item">
+          <a href="{{ url_for('metran_api.congruencial_multiplicativo_30307') }}" class="nav-link { {% if page == 'congmultiplicativo30307' %} active {% endif %} }">excel-07 mod 30307</a>
+      </li><!-- /.nav-item -->
+      <li class="nav-item">
+          <a href="{{ url_for('metran_api.congruencial_multiplicativo_30323') }}" class="nav-link { {% if page == 'congmultiplicativo30323' %} active {% endif %} }"  >excel-07 mod 30323</a>
+      </li><!-- /.nav-item -->
+  </ul><!-- /.nav-tabs -->
+    <div class="mb-4">
+      <div class="tab-pane animated fadeInUp fade show">
+        <div class="row">
+          <div class="col-lg-6">
+            <form method=post action="">
+              {% for field in form %}
+                <div class="form-group">
+                  <label for="exampleInputEmail1">{{ field.label }}</label>
+                  {{ field }}
+                </div>
+              {% endfor %}
+              <!-- <input type=submit value=Calcular class="btn btn-primary"> -->
+              <button type="submit" class="btn btn-success">Calcular</button>
+            </form>
+          </div>
+          <div class="col-lg-6">
+            <div class="living-option-one__content">
+              <p>
+                Tiene como base al algoritmo congruencial lineal pero conlleva una operación menos, la operación principal es la
+                siguiente:
+                \[ X_{i+1} = (aX_{i})mod(m) \]
+          
+                {% if N != None %}
+                Teniendo los datos iniciales se procede a multiplicar la semilla con el multiplicador:
+                \[ ({{ X0 }} * {{ A }}) = {{ res1 }} \]
+                A este se le aplica el módulo que designamos, el cual nos va a dejar solo el residuo de la división realizada por
+                este,
+                con esto habremos descubierto cual es nuestro valor pseudorandómico y al multiplicar por el módulo tendremos
+                nuestra nueva semilla para la siguiente iteración:
+                \[ { {{ res1 }} \over {{ M }} }= {{ res2 }} \qquad {{ res2 }}* {{ M }} = {{ res1 }}\]
+                Esto se puede apreciar de mejor manera en la siguiente iteración como se ve a continuación usando la nueva
+                semilla:
+                \[ ({{ res1 }} * {{ A }}) = {{ res3 }} \qquad { {{ res3 }} \over {{ M }} }= {{ res5 }} = {{ res4 }} \]
+                De ahí solo hay que repetir el proceso las veces necesarias teniendo en cuenta el reemplazar la semilla en cada
+                iteracion.
+          
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4">
+      <div class="tab-pane animated fadeInUp fade show">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="living-option-one__content">
+              {% if N != None %}
+                <h3> Tabla de valores randoms</h3>
+                {% for table in tables %}
+                  {{ table|safe }}
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div><!-- /.col-lg-6 -->
+          <div class="col-lg-6">
+            <div class="living-option-one__content">
+              {% if N != None %}
+                <h3>Gráfica de los números aleatorios generados</h3>
+                <img src="{{ grafica }}" width="550">
+              {% endif %}
+            </div><!-- /.living-option-one__content -->
+          </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

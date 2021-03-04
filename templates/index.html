@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+	<section class="page-header" style="background-image: url(/static/assets/images/background/random-bg.jpg);">
+		<div class="container">
+			<h2>Métodos Randoms</h2>
+		</div><!-- /.container -->
+	</section><!-- /.page-header -->
+	<section class="career-one">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="career-one__block">
+						<div class="block-title">
+							<h3>Métodos Randoms</h3>
+						</div><!-- /.block-title -->
+						<p>La simulación de cualquier sistema o proceso donde existen componentes aleatorios necesita de números al azar, un número aleatorio es un número de una
+							secuencia cuya probabilidad de ocurrencia es igual a la de cualquier otro número de la secuencia. Disponer de un buen generador de números aleatorios es
+							fundamental en cualquier simulación. Aquí podrá encontrar una selección de diferentes generadores aleatorios con los que podrá trabajar.</p>
+					</div><!-- /.career-one__block -->
+				</div><!-- /.col-lg-6 -->
+				<div class="col-lg-6">
+					<div class="sidebar">
+						<div class="sidebar__single sidebar__category">
+							<h3 class="sidebar__title">Métodos</h3><!-- /.sidebar__title -->
+							<ul class="sidebar__cat-list">
+								<li><a href="{{ url_for('metran_api.cuadrado_medio') }}">Cuadrado medio</a></li>
+								<li><a href="{{ url_for('metran_api.congruencial_aditivo') }}">Congruencial aditivo</a></li>
+								<li>
+									<p>Congruencial multiplicativo</p>
+								</li>
+								<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_autogenerado') }}">Autogenerar valores</a></li>
+								<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_30264') }}">generador excel-03 mod 30264</a></li>
+								<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_30307') }}">generador excel-07 mod 30307</a></li>
+								<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_30323') }}">generador excel-07 mod 30323</a></li>
+							</ul><!-- /.sidebar__cat-list -->
+						</div><!-- /.sidebar__single -->
+					</div>
+				</div><!-- /.col-lg-6 -->
+			</div><!-- /.row -->
+		</div><!-- /.container -->
+	</section><!-- /.career-one -->
+{% endblock %}
