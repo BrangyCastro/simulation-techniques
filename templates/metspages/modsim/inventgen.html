@@ -1,92 +1,78 @@
 {% extends "layout2.html" %}
 
 {% block content %}
-<div class="container demo-1">
-  <!-- Codrops top bar -->
-  <div class="codrops-top clearfix">
-    <span class="right"><a href="/static/ManualDeUsuario.pdf" target="_blank" ><strong>Manual de uso</strong></a></span>
-  </div>
-  <!--/ Codrops top bar -->
-  <header class="clearfix">
+<section class="page-header page-header__dark" style="background-image: url(/static/assets/images/background/modele-sim-bg.jpg);">
+  <div class="container">
+      <h2>Tabla de inventario general</h2>
+      <ul class="list-unstyled thm-breadcrumb">
+          <li><a href="{{ url_for('index5') }}">Modelo de Simulación</a></li>
+          <li><span>Tabla de inventario general</span></li>
+      </ul><!-- /.list-unstyled -->
+  </div><!-- /.container -->
+</section><!-- /.page-header -->
 
-    <h1 id="texthead"> Tabla de inventario </h1>
-    <div class="right">
-      <div id="dl-menu" class="dl-menuwrapper">
-        <button class="dl-trigger">Open Menu</button>
-        <ul class="dl-menu">
-          <li>
-            <a href="#">Modelo de Inventario</a>
-            <ul class="dl-submenu">
-              <li>
-                <a href="{{ url_for('modsim_api.inventario_EOQ') }}">Inventario EOQ</a>
-              </li>
-              <li>
-                <a href="{{ url_for('modsim_api.inventario_general') }}">Tabla de inventario general</a>
-              </li>
-              <li>
-                <a href="{{ url_for('modsim_api.inventario_empresa') }}">Tabla de inventario para caso real</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="{{ url_for('modsim_api.linea_espera') }}">Modelo de linea de espera</a>
-          </li>
-        </ul>
-      </div><!-- /dl-menuwrapper -->
+<section class="living-option-one">
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li class="nav-item"><a href="{{ url_for('modsim_api.inventario_EOQ') }}" class="nav-link">Inventario EOQ</a></li>
+			<li class="nav-item"><a href="{{ url_for('modsim_api.inventario_general') }}" class="nav-link active">Tabla de inventario general</a></li>
+      <li class="nav-item"><a href="{{ url_for('modsim_api.inventario_empresa') }}" class="nav-link">Tabla de inventario para caso real</a></li>
+    </ul><!-- /.nav-tabs -->
+    <div class="mb-4">
+      <div class="tab-pane animated fadeInUp fade show">
+        <div class="row">
+          <div class="col-lg-6">
+            <form method=post action="">
+              {% for field in form %}
+                <div class="form-group">
+                  <label for="exampleInputEmail1">{{ field.label }}</label>
+                  {{ field }}
+                </div>
+              {% endfor %}
+              <!-- <input type=submit value=Calcular class="btn btn-primary"> -->
+              <button type="submit" class="btn btn-success">Calcular</button>
+            </form>
+          </div>
+          <div class="col-lg-6">
+            <div class="living-option-one__content">
+              <p>
+                El sistema de inventario es un conjunto de políticas, modelos, componentes (productos, compras, pedidos, costos,
+                órdenes de compra, cantidad de pedido,
+                tiempos de pedido…), que organizados e interrelacionados nos permitan optimizar el costo de mantener el inventario
+                para que la empresa pueda obtener
+                beneficios reales y otros como el “GoodWill” o prestigio de la empresa no tangible.
+                \[\]
+                {% if D != None %}
+                La situación de inventarios más común que enfrentan los fabricantes, distribuidores, y comerciantes es que los
+                niveles de inventarios se reducen con el tiempo y
+                después se reabastecen con la llegada de nuevas unidades. Se supone que los artículos bajo suposición saldrán en
+                forma continua a una tasa constante
+                conocida \((D=demanda)\), el inventario se reabastece \((al \ producir \ u \ ordenar)\) un lote de tamaño fijo
+                \((Q= unidades)\) que llegan juntas en un tiempo determinado
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </header>
-  <div class="main clearfix">
-    <form method=post action="">
-      <div class="column">
-        <table>
-          {% for field in form %}
-          <tr>
-            <td>{{ field.label }}</td>
-          </tr>
-          <tr>
-            <td>{{ field }}</td>
-          </tr>
-          {% endfor %}
-          <td>
-            <input type=submit value=Calcular>
-    </form>
-    <form method="get" action="{{ url_for('index5') }}">
-      <button type="submit">Regresar</button>
-    </form>
-    </td>
-    </table>
-
+    <div class="mt-4">
+      <div class="tab-pane animated fadeInUp fade show">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="living-option-one__content">
+              {% if D != None %}
+                <h3>Tabla de inventario</h3>
+                {% for table in tables %}
+                  {{ table|safe }}
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div><!-- /.col-lg-12 -->
+        </div><!-- /.row -->
+      </div>
+    </div>
   </div>
-  <div class="column">
-    <p>
-      El sistema de inventario es un conjunto de políticas, modelos, componentes (productos, compras, pedidos, costos,
-      órdenes de compra, cantidad de pedido,
-      tiempos de pedido…), que organizados e interrelacionados nos permitan optimizar el costo de mantener el inventario
-      para que la empresa pueda obtener
-      beneficios reales y otros como el “GoodWill” o prestigio de la empresa no tangible.
-      \[\]
-      {% if D != None %}
-      La situación de inventarios más común que enfrentan los fabricantes, distribuidores, y comerciantes es que los
-      niveles de inventarios se reducen con el tiempo y
-      después se reabastecen con la llegada de nuevas unidades. Se supone que los artículos bajo suposición saldrán en
-      forma continua a una tasa constante
-      conocida \((D=demanda)\), el inventario se reabastece \((al \ producir \ u \ ordenar)\) un lote de tamaño fijo
-      \((Q= unidades)\) que llegan juntas en un tiempo determinado
-      {% endif %}
-    </p>
-  </div>
-</div>
-<div>
-  <div class="centered">
-    {% if D != None %}
-    <h2>Tabla de inventario</h2>
-    {% for table in tables %}
-    {{ table|safe }}
-    {% endfor %}
-    {% endif %}
-  </div>
-
-</div>
-</div><!-- /container -->
+</section>
 
 {% endblock %}
