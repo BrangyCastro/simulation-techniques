@@ -546,14 +546,14 @@ def inventario_empresa():
 def linea_espera():
     page = "lineaespera"
     class InputForm(Form):
-        D = FloatField(
-            label='Escribir valor de landa', default=1.333,
-            validators=[validators.InputRequired()])
-        CO = FloatField(
-            label='Escribir valor de nu', default=4,
-            validators=[validators.InputRequired()])
         CH = IntegerField(
             label='Número de personas en espera', default=10,
+            validators=[validators.InputRequired()])
+        D = FloatField(
+            label='\( Landa \ \lambda \)', default=1.333,
+            validators=[validators.InputRequired()])
+        CO = FloatField(
+            label='\( Nu \ \mu \)', default=4,
             validators=[validators.InputRequired()])
     
     form = InputForm(request.form)
@@ -670,12 +670,6 @@ def linea_espera():
 def linea_espera_aditivo():
     page = "lineaesperaaditivo"
     class InputForm(Form):
-        D = FloatField(
-            label='Landa \[ Landa \ p=\lambda/\mu \]', default=1.333,
-            validators=[validators.InputRequired()])
-        CO = FloatField(
-            label='Escribir valor de nu', default=4,
-            validators=[validators.InputRequired()])
         CH = IntegerField(
             label='Número de personas en espera', default=10,
             validators=[validators.InputRequired()])
@@ -690,6 +684,12 @@ def linea_espera_aditivo():
             validators=[validators.InputRequired()])
         C = IntegerField(
             label='Incremento', default=111,
+            validators=[validators.InputRequired()])
+        D = FloatField(
+            label='\( Landa \ \lambda \)', default=1.333,
+            validators=[validators.InputRequired()])
+        CO = FloatField(
+            label='\( Nu \ \mu \)', default=4,
             validators=[validators.InputRequired()])
     
     form = InputForm(request.form)
@@ -827,12 +827,6 @@ def linea_espera_aditivo():
 def linea_espera_multiplicativo():
     page = "lineaesperamultiplicativo"
     class InputForm(Form):
-        D = FloatField(
-            label='Escribir valor de landa', default=1.333,
-            validators=[validators.InputRequired()])
-        CO = FloatField(
-            label='Escribir valor de nu', default=4,
-            validators=[validators.InputRequired()])
         CH = IntegerField(
             label='Número de personas en espera', default=10,
             validators=[validators.InputRequired()])
@@ -844,6 +838,12 @@ def linea_espera_multiplicativo():
             validators=[validators.InputRequired()])
         X0 = IntegerField(
             label='Semilla', default=109,
+            validators=[validators.InputRequired()])
+        D = FloatField(
+            label='\( Landa \ \lambda \)', default=1.333,
+            validators=[validators.InputRequired()])
+        CO = FloatField(
+            label='\( Nu \ \mu \)', default=4,
             validators=[validators.InputRequired()])
     
     form = InputForm(request.form)

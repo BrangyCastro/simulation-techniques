@@ -17,23 +17,26 @@ import xlsxwriter
 
 metran_api = Blueprint('metran_api', __name__)
 
-
+style={'class': 'form-control'}
 
 @metran_api.route('/cuadmedio', methods=("POST", "GET"))
 def cuadrado_medio():
     class InputForm(Form):
         N = IntegerField(
-            label='Número de iteraciones', default=10,
-            validators=[validators.InputRequired()])
+            label='Nº de iteraciones (N)', 
+            default=10,
+            validators=[validators.InputRequired()],
+            render_kw=style)
         R = IntegerField(
-            label='Valor inicial (mínimo 3 dígitos)', default=2456,
-            validators=[validators.InputRequired(), validators.NumberRange(min=100)])
+            label='Valor inicial o "semilla" (mínimo 3 dígitos) (R)', 
+            default=171,
+            validators=[validators.InputRequired(), validators.NumberRange(min=100)],
+            render_kw=style)
     
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
         # Método de los cuadrados medios   
         n= int(form.N.data)
-        #r=7182 # seleccionamos el valor inicial r
         r= int(form.R.data) # seleccionamos el valor inicial r
         reserva = int(form.R.data)
         l=len(str(r)) # determinamos el número de dígitos
@@ -90,25 +93,29 @@ def cuadrado_medio():
         res5 = 0
     return render_template('/metspages/metran/cuadmedio.html', form=form, N=N, R=R, res=reserva, res2=reserva2,res3=reserva3,res4=reserva4, res5=res5)
 
-
 @metran_api.route('/congaditivo', methods=("POST", "GET"))
 def congruencial_aditivo():
     class InputForm(Form):
-        N = IntegerField(
-            label='Número de iteraciones', default=20,
-            validators=[validators.InputRequired()])
-        M = IntegerField(
-            label='Módulo', default=1000,
-            validators=[validators.InputRequired()])
-        A = IntegerField(
-            label='Multiplicador', default=101,
-            validators=[validators.InputRequired()])
         X0 = IntegerField(
-            label='Semilla', default=4,
-            validators=[validators.InputRequired()])
+            label='Semilla (Xn)', default=4,
+            validators=[validators.InputRequired()],
+            render_kw=style)
+        A = IntegerField(
+            label='Multiplicador (a)', default=101,
+            validators=[validators.InputRequired()],
+            render_kw=style)
         C = IntegerField(
-            label='Incremento', default=457,
-            validators=[validators.InputRequired()])
+            label='Incremento (c)', default=457,
+            validators=[validators.InputRequired()],
+            render_kw=style)
+        M = IntegerField(
+            label='Módulo (m)', default=1000,
+            validators=[validators.InputRequired()],
+            render_kw=style)    
+        N = IntegerField(
+            label='Nº de iteraciones (n)', default=20,
+            validators=[validators.InputRequired()],
+            render_kw=style)
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
         # Generador de números aleatorios Congruencia lineal
@@ -172,18 +179,22 @@ def congruencial_aditivo():
 def congruencial_multiplicativo_autogenerado():
     page = "congmultiplicativo"
     class InputForm(Form):
-        N = IntegerField(
-            label='Número de iteraciones', default=20,
-            validators=[validators.InputRequired()])
-        M = IntegerField(
-            label='Módulo', default=1000,
-            validators=[validators.InputRequired()])
-        A = IntegerField(
-            label='Multiplicador', default=747,
-            validators=[validators.InputRequired()])
         X0 = IntegerField(
-            label='Semilla', default=123,
-            validators=[validators.InputRequired()])
+            label='Semilla (Xn)', default=123,
+            validators=[validators.InputRequired()],
+            render_kw=style)
+        A = IntegerField(
+            label='Multiplicador (a)', default=747,
+            validators=[validators.InputRequired()],
+            render_kw=style)
+        M = IntegerField(
+            label='Módulo (m)', default=1000,
+            validators=[validators.InputRequired()],
+            render_kw=style)
+        N = IntegerField(
+            label='Nº de iteraciones (n)', default=20,
+            validators=[validators.InputRequired()],
+            render_kw=style)
     
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -250,19 +261,21 @@ def congruencial_multiplicativo_autogenerado():
 def congruencial_multiplicativo_30264():
     page = "congmultiplicativo30264"
     class InputForm(Form):
-        N = IntegerField(
-            label='Número de iteraciones', default=20,
-            validators=[validators.InputRequired()])
         X0 = IntegerField(
-            label='Semilla', default=123,
-            validators=[validators.InputRequired()])
+            label='Semilla (Xn)', default=123,
+            validators=[validators.InputRequired()],
+            render_kw=style)
+        N = IntegerField(
+            label='Nº de iteraciones (n)', default=20,
+            validators=[validators.InputRequired()],
+            render_kw=style)
     
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
         # Generador de números aleatorios Congruencia lineal
         n = int(form.N.data)
         x0 = int(form.X0.data)
-        m, a = 1000, 747
+        m, a = 1000, 171
 
         resv1 = n
         resv2 = m
@@ -321,12 +334,14 @@ def congruencial_multiplicativo_30264():
 def congruencial_multiplicativo_30307():
     page = "congmultiplicativo30307"
     class InputForm(Form):
-        N = IntegerField(
-            label='Número de iteraciones', default=20,
-            validators=[validators.InputRequired()])
         X0 = IntegerField(
-            label='Semilla', default=123,
-            validators=[validators.InputRequired()])
+            label='Semilla (Xn)', default=123,
+            validators=[validators.InputRequired()],
+            render_kw=style)
+        N = IntegerField(
+            label='Nº de iteraciones (n)', default=20,
+            validators=[validators.InputRequired()],
+            render_kw=style)
     
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -391,12 +406,14 @@ def congruencial_multiplicativo_30307():
 def congruencial_multiplicativo_30323():
     page = "congmultiplicativo30323"
     class InputForm(Form):
-        N = IntegerField(
-            label='Número de iteraciones', default=20,
-            validators=[validators.InputRequired()])
         X0 = IntegerField(
-            label='Semilla', default=123,
-            validators=[validators.InputRequired()])
+            label='Semilla (Xn)', default=123,
+            validators=[validators.InputRequired()],
+            render_kw=style)
+        N = IntegerField(
+            label='Nº de iteraciones (n)', default=20,
+            validators=[validators.InputRequired()],
+            render_kw=style)
     
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
