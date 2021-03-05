@@ -15,7 +15,7 @@
   <div class="container">
     <ul class="nav nav-tabs">
       <li class="nav-item"><a href="{{ url_for('modsim_api.inventario_EOQ') }}" class="nav-link">Inventario EOQ</a></li>
-			<li class="nav-item"><a href="{{ url_for('modsim_api.inventario_general') }}" class="nav-link active">Tabla de inventario general</a></li>
+			<!-- <li class="nav-item"><a href="{{ url_for('modsim_api.inventario_general') }}" class="nav-link active">Tabla de inventario general</a></li> -->
       <!-- <li class="nav-item"><a href="{{ url_for('modsim_api.inventario_empresa') }}" class="nav-link">Tabla de inventario para caso real</a></li> -->
     </ul><!-- /.nav-tabs -->
     <div class="mb-4">
@@ -30,7 +30,7 @@
                 </div>
               {% endfor %}
               <!-- <input type=submit value=Calcular class="btn btn-primary"> -->
-              <button type="submit" class="btn btn-success">Calcular</button>
+              <button type="submit" class="btn btn-success btn-block">Calcular</button>
             </form>
           </div>
           <div class="col-lg-6">

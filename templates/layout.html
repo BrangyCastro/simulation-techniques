@@ -102,14 +102,14 @@
 										<li class="dropdown">
 											<a href="#">Método Monte Carlo</a>
 											<ul>
-												<li><a href="{{ url_for('metsim_api.montecarlo_aditivo') }}">Por congruencial aditivo</a></li>
+												<li><a href="{{ url_for('metsim_api.montecarlo_aditivo') }}">Por congruencial lineal</a></li>
 												<li><a href="{{ url_for('metsim_api.montecarlo_multiplicativo') }}">Por congruencial multiplicativo</a></li>
 											</ul>
 										</li>
 										<li class="dropdown">
 											<a href="#">Método de la transformada inversa</a>
 											<ul>
-												<li><a href="{{ url_for('metsim_api.transformada_inversa_aditivo') }}">Por congruencial aditivo</a></li>
+												<li><a href="{{ url_for('metsim_api.transformada_inversa_aditivo') }}">Por congruencial lineal</a></li>
 												<li><a href="{{ url_for('metsim_api.transformada_inversa_multiplicativo') }}">Por congruencial multiplicativo</a></li>
 											</ul>
 										</li>
@@ -122,7 +122,7 @@
 											<a href="#">Modelos de inventario</a>
 											<ul>
 												<li><a href="{{ url_for('modsim_api.inventario_EOQ') }}">Modelo EOQ</a></li>
-												<li><a href="{{ url_for('modsim_api.inventario_general') }}">Simulación del inventario</a></li>
+												<!-- <li><a href="{{ url_for('modsim_api.inventario_general') }}">Simulación del inventario</a></li> -->
 												<!-- <li><a href="{{ url_for('modsim_api.inventario_empresa') }}">Tabla de inventario para caso real</a></li> -->
 											</ul>
 										</li>
@@ -130,7 +130,7 @@
 											<a href="#">Modelo de linea de espera</a>
 											<ul>
 												<li><a href="{{ url_for('modsim_api.linea_espera') }}">Valores autogenerados</a></li>
-												<li><a href="{{ url_for('modsim_api.linea_espera_aditivo') }}">Por congruencial aditivo</a></li>
+												<li><a href="{{ url_for('modsim_api.linea_espera_aditivo') }}">Por congruencial lineal</a></li>
 												<li><a href="{{ url_for('modsim_api.linea_espera_multiplicativo') }}">Por congruencial multiplicativo</a></li>
 											</ul>
 										</li>

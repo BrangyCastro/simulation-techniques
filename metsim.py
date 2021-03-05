@@ -1,44 +1,57 @@
-from flask import Blueprint, Flask, render_template, make_response,request, send_file
-from wtforms import Form, FloatField, validators,StringField, IntegerField
+import matplotlib.pyplot as plt
+from flask import Blueprint, Flask, render_template, make_response, request, send_file
+from wtforms import Form, FloatField, validators, StringField, IntegerField, TextAreaField
 from numpy import exp, cos, linspace
 import math
 import itertools
 import io
 import random
-import os, time, glob
+import os
+import time
+import glob
 import numpy as np
 import pandas as pd
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 
 
 metsim_api = Blueprint('metsim_api', __name__)
 
+style = {'class': 'form-control', "rows": 3}
+
+
 @metsim_api.route('/montecarloaditivo', methods=("POST", "GET"))
 def montecarlo_aditivo():
     page = "montecarloaditivo"
+
     class InputForm(Form):
-        L = StringField(
-            label='Escriba los valores de ingreso separados por comas (,)', default='5501.0, 6232.7, 8118.3, 10137.00, 10449.50, 12794.60, 9939.10,  13193.00, 16036.2, 18496.90, 18709.30, 19363.50, 16521.50, 15175.40,  16927.00',
-            validators=[validators.InputRequired()])
+        L = TextAreaField(
+            label='Escriba los valores de ingreso separados por comas (,)',
+            default='5501.0, 6232.7, 8118.3, 10137.00, 10449.50, 12794.60, 9939.10,  13193.00, 16036.2, 18496.90, 18709.30, 19363.50, 16521.50, 15175.40,  16927.00',
+            validators=[validators.InputRequired()],
+            render_kw=style)
         N = IntegerField(
-            label='Número de eventos que desea', default=20,
-            validators=[validators.InputRequired()])
+            label='Número de eventos que desea (n)', default=20,
+            validators=[validators.InputRequired()],
+            render_kw=style)
         M = IntegerField(
-            label='Módulo', default=1000,
-            validators=[validators.InputRequired()])
+            label='Módulo (m)', default=1000,
+            validators=[validators.InputRequired()],
+            render_kw=style)
         A = IntegerField(
-            label='Multiplicador', default=747,
-            validators=[validators.InputRequired()])
+            label='Multiplicador (a)', default=747,
+            validators=[validators.InputRequired()],
+            render_kw=style)
         X0 = IntegerField(
-            label='Semilla', default=123,
-            validators=[validators.InputRequired()])
+            label='Semilla (Xn)', default=123,
+            validators=[validators.InputRequired()],
+            render_kw=style)
         C = IntegerField(
-            label='Incremento', default=457,
-            validators=[validators.InputRequired()])
+            label='Incremento (c)', default=457,
+            validators=[validators.InputRequired()],
+            render_kw=style)
 
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -46,36 +59,35 @@ def montecarlo_aditivo():
         # el DataFrame se llama movil
         prueba = str(form.L.data)
         ex = prueba.split(",")
-        ex2 =list(map(float,ex))
-        exporta = {'Año':ex2,
-        'Valores':ex2}
+        ex2 = list(map(float, ex))
+        exporta = {'Año': ex2,
+                   'Valores': ex2}
         a = pd.DataFrame(exporta)
         cant = len(a['Valores'])
         cantidad = list(range(cant + 1))
         cantidad[1:]
         a['Año'] = cantidad[1:]
 
-
         dfval = exporta['Valores']
-        
+
         # Ordenamos por Día
         suma = a['Valores'].sum()
-        ##cant=len(exporta)
+        # cant=len(exporta)
         suma
         x1 = a.assign(Probabilidad=lambda x: x['Valores'] / suma)
         x2 = x1.sort_values('Año')
 
         salvando = x2['Año']
         del x2['Año']
-        a=x2['Probabilidad']
-        a1= np.cumsum(a) #Cálculo la suma acumulativa de las probabilidades
-        x2['FPA'] =a1
+        a = x2['Probabilidad']
+        a1 = np.cumsum(a)  # Cálculo la suma acumulativa de las probabilidades
+        x2['FPA'] = a1
         x2['Min'] = x2['FPA']
         x2['Max'] = x2['FPA']
         lis = x2["Min"].values
         lis2 = x2['Max'].values
-        lis[0]= 0
-        for i in range(1,len(x2['Valores'])):
+        lis[0] = 0
+        for i in range(1, len(x2['Valores'])):
             lis[i] = lis2[i-1]
         x2['Min'] = lis
 
@@ -93,25 +105,26 @@ def montecarlo_aditivo():
             x0 = x[i]
             r[i] = x0 / m
         # llenamos nuestro DataFrame
-        d = {'ri': r }
+        d = {'ri': r}
         dfMCL = pd.DataFrame(data=d)
         dfMCL
-        max = x2 ['Max'].values
-        min = x2 ['Min'].values
+        max = x2['Max'].values
+        min = x2['Min'].values
+
         def busqueda(arrmin, arrmax, valor):
-        #print(valor)
-            for i in range (len(arrmin)):
-            # print(arrmin[i],arrmax[i])
+            # print(valor)
+            for i in range(len(arrmin)):
+                # print(arrmin[i],arrmax[i])
                 if valor >= arrmin[i] and valor <= arrmax[i]:
                     return i
-                    #print(i)
+                    # print(i)
             return -1
         xpos = dfMCL['ri']
         posi = [0] * n
         #print (n)
         for j in range(n):
             val = xpos[j]
-            pos = busqueda(min,max,val)
+            pos = busqueda(min, max, val)
             posi[j] = pos
         df1 = x2
 
@@ -122,12 +135,12 @@ def montecarlo_aditivo():
                 simu = sim.filter(['Valores']).values
                 iterator = itertools.chain(*simu)
                 for item in iterator:
-                    a=item
-                simula.append(round(a,2))
+                    a = item
+                simula.append(round(a, 2))
         dfMCL["Simulación"] = pd.DataFrame(simula)
         df2 = dfMCL
-        return render_template('/metspages/metsim/montecarlo.html', form=form, tables=[df1.to_html(classes='data')], tables2=[df2.to_html(classes='data')], suma=suma,vald1=dfval[0],
-        cant=cant,dfprob=dfprob[0], page=page)
+        return render_template('/metspages/metsim/montecarlo.html', form=form, tables=[df1.to_html(classes='data')], tables2=[df2.to_html(classes='data')], suma=suma, vald1=dfval[0],
+                               cant=cant, dfprob=dfprob[0], page=page)
     else:
         N = None
         M = None
@@ -136,31 +149,39 @@ def montecarlo_aditivo():
         C = None
         L = None
         grafica = None
-        vald1= None
-        cant= None
-        suma= None
+        vald1 = None
+        cant = None
+        suma = None
         dfprob = None
-    return render_template('/metspages/metsim/montecarlo.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica,suma=suma,vald1=vald1,cant=cant,dfprob=dfprob, page=page)
+    return render_template('/metspages/metsim/montecarlo.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica, suma=suma, vald1=vald1, cant=cant, dfprob=dfprob, page=page)
+
 
 @metsim_api.route('/montecarlomultiplicativo', methods=("POST", "GET"))
 def montecarlo_multiplicativo():
     page = "montecarlomultiplicativo"
+
     class InputForm(Form):
-        L = StringField(
-            label='Escriba los valores de ingreso separados por comas (,)', default='5501.0, 6232.7, 8118.3, 10137.00, 10449.50, 12794.60, 9939.10,  13193.00, 16036.2, 18496.90, 18709.30, 19363.50, 16521.50, 15175.40,  16927.00',
-            validators=[validators.InputRequired()])
+        L = TextAreaField(
+            label='Escriba los valores de ingreso separados por comas (,)',
+            default='5501.0, 6232.7, 8118.3, 10137.00, 10449.50, 12794.60, 9939.10,  13193.00, 16036.2, 18496.90, 18709.30, 19363.50, 16521.50, 15175.40,  16927.00',
+            validators=[validators.InputRequired()],
+            render_kw=style)
         N = FloatField(
-            label='Número de eventos que desea', default=20,
-            validators=[validators.InputRequired()])
+            label='Número de eventos que desea (n)', default=20,
+            validators=[validators.InputRequired()],
+            render_kw=style)
         M = FloatField(
-            label='Módulo', default=1000,
-            validators=[validators.InputRequired()])
+            label='Módulo (m)', default=1000,
+            validators=[validators.InputRequired()],
+            render_kw=style)
         A = FloatField(
-            label='Multiplicador', default=747,
-            validators=[validators.InputRequired()])
+            label='Multiplicador (a)', default=747,
+            validators=[validators.InputRequired()],
+            render_kw=style)
         X0 = FloatField(
-            label='Semilla', default=123,
-            validators=[validators.InputRequired()])
+            label='Semilla (Xn)', default=123,
+            validators=[validators.InputRequired()],
+            render_kw=style)
 
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -168,9 +189,9 @@ def montecarlo_multiplicativo():
         # el DataFrame se llama movil
         prueba = str(form.L.data)
         ex = prueba.split(",")
-        ex2 =list(map(float,ex))
-        exporta = {'Año':ex2,
-        'Valores':ex2}
+        ex2 = list(map(float, ex))
+        exporta = {'Año': ex2,
+                   'Valores': ex2}
         a = pd.DataFrame(exporta)
         cant = len(a['Valores'])
         cantidad = list(range(cant + 1))
@@ -181,22 +202,22 @@ def montecarlo_multiplicativo():
 
         # Ordenamos por Día
         suma = a['Valores'].sum()
-        n=len(exporta)
+        n = len(exporta)
         suma
         x1 = a.assign(Probabilidad=lambda x: x['Valores'] / suma)
         x2 = x1.sort_values('Año')
 
         salvando = x2['Año']
         del x2['Año']
-        a=x2['Probabilidad']
-        a1= np.cumsum(a) #Cálculo la suma acumulativa de las probabilidades
-        x2['FPA'] =a1
+        a = x2['Probabilidad']
+        a1 = np.cumsum(a)  # Cálculo la suma acumulativa de las probabilidades
+        x2['FPA'] = a1
         x2['Min'] = x2['FPA']
         x2['Max'] = x2['FPA']
         lis = x2["Min"].values
         lis2 = x2['Max'].values
-        lis[0]= 0
-        for i in range(1,len(x2['Valores'])):
+        lis[0] = 0
+        for i in range(1, len(x2['Valores'])):
             lis[i] = lis2[i-1]
         x2['Min'] = lis
 
@@ -215,25 +236,26 @@ def montecarlo_multiplicativo():
             x0 = x[i]
             r[i] = x0 / m
         # llenamos nuestro DataFrame
-        d = {'ri': r }
+        d = {'ri': r}
         dfMCL = pd.DataFrame(data=d)
         dfMCL
-        max = x2 ['Max'].values
-        min = x2 ['Min'].values
+        max = x2['Max'].values
+        min = x2['Min'].values
+
         def busqueda(arrmin, arrmax, valor):
-        #print(valor)
-            for i in range (len(arrmin)):
-            # print(arrmin[i],arrmax[i])
+            # print(valor)
+            for i in range(len(arrmin)):
+                # print(arrmin[i],arrmax[i])
                 if valor >= arrmin[i] and valor <= arrmax[i]:
                     return i
-                    #print(i)
+                    # print(i)
             return -1
         xpos = dfMCL['ri']
         posi = [0] * n
         #print (n)
         for j in range(n):
             val = xpos[j]
-            pos = busqueda(min,max,val)
+            pos = busqueda(min, max, val)
             posi[j] = pos
         df1 = x2
 
@@ -244,12 +266,12 @@ def montecarlo_multiplicativo():
                 simu = sim.filter(['Valores']).values
                 iterator = itertools.chain(*simu)
                 for item in iterator:
-                    a=item
-                simula.append(round(a,2))
+                    a = item
+                simula.append(round(a, 2))
         dfMCL["Simulación"] = pd.DataFrame(simula)
         df2 = dfMCL
-        return render_template('/metspages/metsim/montecarlo.html', form=form, tables=[df1.to_html(classes='data')], tables2=[df2.to_html(classes='data')], suma=suma,vald1=dfval[0],
-        cant=cant,dfprob=dfprob[0], page=page)
+        return render_template('/metspages/metsim/montecarlo.html', form=form, tables=[df1.to_html(classes='data')], tables2=[df2.to_html(classes='data')], suma=suma, vald1=dfval[0],
+                               cant=cant, dfprob=dfprob[0], page=page)
     else:
         N = None
         M = None
@@ -258,15 +280,17 @@ def montecarlo_multiplicativo():
         C = None
         L = None
         grafica = None
-        vald1= None
-        cant= None
-        suma= None
+        vald1 = None
+        cant = None
+        suma = None
         dfprob = None
-    return render_template('/metspages/metsim/montecarlo.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica,suma=suma,vald1=vald1,cant=cant,dfprob=dfprob, page=page)
+    return render_template('/metspages/metsim/montecarlo.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica, suma=suma, vald1=vald1, cant=cant, dfprob=dfprob, page=page)
+
 
 @metsim_api.route('/transinversaditivo', methods=("POST", "GET"))
 def transformada_inversa_aditivo():
     page = "transinversaditivo"
+
     class InputForm(Form):
         L = FloatField(
             label='Ingrese el valor de landa', default=0.2,
@@ -301,9 +325,9 @@ def transformada_inversa_aditivo():
             x0 = x[i]
             r[i] = x0 / m
         # llenamos nuestro DataFrame
-        d = {'Xn': x, 'ri': r }
+        d = {'Xn': x, 'ri': r}
         dfMCL = pd.DataFrame(data=d)
-        landa= form.L.data
+        landa = form.L.data
         dfexp = dfMCL['ri']
         # calculamos a todos los elementos la inversa
         exp_x = dfexp.values*(-1/landa)*np.log(dfexp)
@@ -311,7 +335,7 @@ def transformada_inversa_aditivo():
         dfMCL["Inversa"] = exp_x
         df = dfMCL
 
-        dfgrafico = dfMCL.filter(items=['ri','Inversa'])
+        dfgrafico = dfMCL.filter(items=['ri', 'Inversa'])
         dfgrafico.plot()
         if not os.path.isdir('static'):
             os.mkdir('static')
@@ -336,9 +360,11 @@ def transformada_inversa_aditivo():
         grafica = None
     return render_template('/metspages/metsim/transinversa.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica, page=page)
 
+
 @metsim_api.route('/transinversamultiplicativo', methods=("POST", "GET"))
 def transformada_inversa_multiplicativo():
     page = "transinversamultiplicativo"
+
     class InputForm(Form):
         L = FloatField(
             label='Ingrese el valor de landa', default=0.2,
@@ -368,9 +394,9 @@ def transformada_inversa_multiplicativo():
             x[i] = (a*x0) % m
             x0 = x[i]
             r[i] = x0 / m
-        d = {'Xn': x, 'ri': r }
+        d = {'Xn': x, 'ri': r}
         dfMCL = pd.DataFrame(data=d)
-        landa= form.L.data
+        landa = form.L.data
         dfexp = dfMCL['ri']
         # calculamos a todos los elementos la inversa
         exp_x = dfexp.values*(-1/landa)*np.log(dfexp)
@@ -378,7 +404,7 @@ def transformada_inversa_multiplicativo():
         dfMCL["Inversa"] = exp_x
         df = dfMCL
 
-        dfgrafico = dfMCL.filter(items=['ri','Inversa'])
+        dfgrafico = dfMCL.filter(items=['ri', 'Inversa'])
         dfgrafico.plot()
         if not os.path.isdir('static'):
             os.mkdir('static')
