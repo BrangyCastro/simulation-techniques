@@ -544,6 +544,7 @@ def inventario_empresa():
 
 @modsim_api.route('/lineaespera', methods=("POST", "GET"))
 def linea_espera():
+    page = "lineaespera"
     class InputForm(Form):
         D = FloatField(
             label='Escribir valor de landa', default=1.333,
@@ -658,20 +659,19 @@ def linea_espera():
 
        
         return render_template('/metspages/modsim/linespera.html', form=form, tables=[df.to_html(classes='data')], tables2=[df2.to_html(classes='data')], grafica=plotfile, dato1=dato1,
-        dato2=dato2,dato3=dato3,dato4=dato4,dato5=dato5,dato6=dato6,dato7=dato7,dato8=dato8)
+        dato2=dato2,dato3=dato3,dato4=dato4,dato5=dato5,dato6=dato6,dato7=dato7,dato8=dato8, page=page)
     else:
         D = None
         CO = None
         CH= None
-    return render_template('/metspages/modsim/linespera.html', form=form, D=D,CO=CO,CH=CH)
-
-
+    return render_template('/metspages/modsim/linespera.html', form=form, D=D,CO=CO,CH=CH, page=page)
 
 @modsim_api.route('/lineaesperaaditivo', methods=("POST", "GET"))
 def linea_espera_aditivo():
+    page = "lineaesperaaditivo"
     class InputForm(Form):
         D = FloatField(
-            label='Escribir valor de landa', default=1.333,
+            label='Landa \[ Landa \ p=\lambda/\mu \]', default=1.333,
             validators=[validators.InputRequired()])
         CO = FloatField(
             label='Escribir valor de nu', default=4,
@@ -812,7 +812,7 @@ def linea_espera_aditivo():
 
        
         return render_template('/metspages/modsim/linespera.html', form=form, tables=[df.to_html(classes='data')], tables2=[df2.to_html(classes='data')], grafica=plotfile, dato1=dato1,
-        dato2=dato2,dato3=dato3,dato4=dato4,dato5=dato5,dato6=dato6,dato7=dato7,dato8=dato8)
+        dato2=dato2,dato3=dato3,dato4=dato4,dato5=dato5,dato6=dato6,dato7=dato7,dato8=dato8, page=page)
     else:
         D = None
         CO = None
@@ -821,12 +821,11 @@ def linea_espera_aditivo():
         A = None
         X0 = None
         C = None
-    return render_template('/metspages/modsim/linespera.html', form=form, D=D,CO=CO,CH=CH,M=M,A=A,X0=X0,C=C)
-
-
+    return render_template('/metspages/modsim/linespera.html', form=form, D=D,CO=CO,CH=CH,M=M,A=A,X0=X0,C=C, page=page)
 
 @modsim_api.route('/lineaesperamultiplicativo', methods=("POST", "GET"))
 def linea_espera_multiplicativo():
+    page = "lineaesperamultiplicativo"
     class InputForm(Form):
         D = FloatField(
             label='Escribir valor de landa', default=1.333,
@@ -965,7 +964,7 @@ def linea_espera_multiplicativo():
 
        
         return render_template('/metspages/modsim/linespera.html', form=form, tables=[df.to_html(classes='data')], tables2=[df2.to_html(classes='data')], grafica=plotfile, dato1=dato1,
-        dato2=dato2,dato3=dato3,dato4=dato4,dato5=dato5,dato6=dato6,dato7=dato7,dato8=dato8)
+        dato2=dato2,dato3=dato3,dato4=dato4,dato5=dato5,dato6=dato6,dato7=dato7,dato8=dato8, page=page)
     else:
         D = None
         CO = None
@@ -974,5 +973,5 @@ def linea_espera_multiplicativo():
         A = None
         X0 = None
 
-    return render_template('/metspages/modsim/linespera.html', form=form, D=D,CO=CO,CH=CH,M=M,A=A,X0=X0)
+    return render_template('/metspages/modsim/linespera.html', form=form, D=D,CO=CO,CH=CH,M=M,A=A,X0=X0, page=page)
 

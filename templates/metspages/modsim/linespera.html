@@ -1,135 +1,107 @@
 {% extends "layout2.html" %}
 
 {% block content %}
-<div class="container demo-1">
-  <!-- Codrops top bar -->
-  <div class="codrops-top clearfix">
-    <span class="right"><a href="/static/ManualDeUsuario.pdf" target="_blank" ><strong>Manual de uso</strong></a></span>
-  </div>
-  <!--/ Codrops top bar -->
-  <header class="clearfix">
 
-    <h1 id="texthead"> Modelo de líneas de espera </h1>
-    <div class="right">
-      <div id="dl-menu" class="dl-menuwrapper">
-        <button class="dl-trigger">Open Menu</button>
-        <ul class="dl-menu">
-          <li>
-            <a href="#">Modelo de Inventario</a>
-            <ul class="dl-submenu">
-              <li>
-                <a href="{{ url_for('modsim_api.inventario_EOQ') }}">Inventario EOQ</a>
-              </li>
-              <li>
-                <a href="{{ url_for('modsim_api.inventario_general') }}">Tabla de inventario general</a>
-              </li>
-              <li>
-                <a href="{{ url_for('modsim_api.inventario_empresa') }}">Tabla de inventario para caso real</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">Modelo de linea de espera</a>
-            <ul class="dl-submenu">
-              <li>
-                <a href="{{ url_for('modsim_api.linea_espera') }}">Valores autogenerados</a>
-              </li>
-              <li>
-                <a href="{{ url_for('modsim_api.linea_espera_aditivo') }}">Por congruencial aditivo</a>
-              </li>
-              <li>
-                <a href="{{ url_for('modsim_api.linea_espera_multiplicativo') }}">Por congruencial multiplicativo</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div><!-- /dl-menuwrapper -->
+<section class="page-header page-header__dark" style="background-image: url(/static/assets/images/background/modele-sim-bg.jpg);">
+  <div class="container">
+      <h2>Modelo de líneas de espera</h2>
+      <ul class="list-unstyled thm-breadcrumb">
+          <li><a href="{{ url_for('index5') }}">Modelo de Simulación</a></li>
+          <li><span>Modelo de líneas de espera</span></li>
+      </ul><!-- /.list-unstyled -->
+  </div><!-- /.container -->
+</section><!-- /.page-header -->
+
+<section class="living-option-one">
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li class="nav-item"><a href="{{ url_for('modsim_api.linea_espera') }}" class="nav-link { {% if page == 'lineaespera' %} active {% endif %} }">Valores autogenerados</a></li>
+			<li class="nav-item"><a href="{{ url_for('modsim_api.linea_espera_aditivo') }}" class="nav-link { {% if page == 'lineaesperaaditivo' %} active {% endif %} }">Por congruencial aditivo</a></li>
+      <li class="nav-item"><a href="{{ url_for('modsim_api.linea_espera_multiplicativo') }}" class="nav-link { {% if page == 'lineaesperamultiplicativo' %} active {% endif %} }">Por congruencial multiplicativo</a></li>
+    </ul><!-- /.nav-tabs -->
+    <div class="mb-4">
+      <div class="tab-pane animated fadeInUp fade show">
+        <div class="row">
+          <div class="col-lg-6">
+            <form method=post action="">
+              {% for field in form %}
+                <div class="form-group">
+                  <label for="exampleInputEmail1">{{ field.label }}</label>
+                  {{ field }}
+                </div>
+              {% endfor %}
+              <!-- <input type=submit value=Calcular class="btn btn-primary"> -->
+              <button type="submit" class="btn btn-success">Calcular</button>
+            </form>
+          </div>
+          <div class="col-lg-6">
+            <div class="living-option-one__content">
+              <p>
+                El objetivo es encontrar el estado óptimo del sistema y determinar una capacidad de servicio apropiada, Minimizar
+                el tiempo de atención y servicio
+                a los clientes o usuarios que llegan en un determinado tiempo. Cuenta con las siguientes relaciones matemáticas:
+                \[ La \ probabilidad \ de \ hallar \ el \ sistema \ ocupado: \ p=\lambda/\mu \]
+                \[ La \ probabilidad \ de \ que \ no \ haya \ unidades \ en \ el \ sistema: \ Po=1-\lambda/\mu \]
+                \[ Promedio \ de \ unidades \ en \ la \ linea \ de \ espera: \ Lq=\lambda^2/(\mu-\lambda)\mu \]
+                \[ Número \ esperado \ de \ clientes \ en \ el \ sistema: \ L=\lambda/\mu-\lambda \]
+                \[ Tiempo \ de \ espera \ en \ cola: Wq=\lambda/\mu(\mu-\lambda) \]
+                \[ El \ tiempo \ promedio \ que \ una \ unidad \ pasa \ en \ el \ sistema: \ W=1/(\mu-\lambda) \]
+                \[ La \ probabilidad \ de \ que \ haya \ n \ unidades \ en \ el \ sistema: \ Pn=(\lambda/\mu)^n Po \]
+                \[\]
+                {% if D != None %}
+                Para los datos ingresados los resultados serían los siguientes:
+                \[ La \ probabilidad \ de \ hallar \ el \ sistema \ ocupado: \ {{dato2}} \]
+                \[ La \ probabilidad \ de \ que \ no \ haya \ unidades \ en \ el \ sistema: \ {{dato3}} \]
+                \[ Promedio \ de \ unidades \ en \ la \ linea \ de \ espera: \ {{dato4}} \]
+                \[ Número \ esperado \ de \ clientes \ en \ el \ sistema: \ {{dato5}} \]
+                \[ Tiempo \ de \ espera \ en \ cola: {{dato7}} \]
+                \[ El \ tiempo \ promedio \ que \ una \ unidad \ pasa \ en \ el \ sistema: \ {{dato6}} \]
+                \[ La \ probabilidad \ de \ que \ haya \ n \ unidades \ en \ el \ sistema: \ {{dato8}} \]
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </header>
-  <div class="main clearfix">
-    <form method=post action="">
-      <div class="column">
-        <table>
-          {% for field in form %}
-          <tr>
-            <td>{{ field.label }}</td>
-          </tr>
-          <tr>
-            <td>{{ field }}</td>
-          </tr>
-          {% endfor %}
-          <td>
-            <input type=submit value=Calcular>
-    </form>
-    <form method="get" action="{{ url_for('index5') }}">
-      <button type="submit">Regresar</button>
-    </form>
-    </td>
-    </table>
-
+    <div class="mt-4">
+      <div class="tab-pane animated fadeInUp fade show">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="living-option-one__content">
+              {% if D != None %}
+                <h3> Tabla de resultados </h3>
+                {% for table in tables %}
+                  {{ table|safe }}
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div><!-- /.col-lg-6 -->
+          <div class="col-lg-12 mt-4">
+            <div class="living-option-one__content">
+              {% if D != None %}
+                <h3> Gráfico de valores </h3>
+                <img src="{{ grafica }}" width="700" class="grafica">
+              {% endif %}
+            </div><!-- /.living-option-one__content -->
+          </div><!-- /.col-lg-6 -->
+          <div class="col-lg-12 mt-4">
+            <div class="living-option-one__content">
+              {% if D != None %}
+                <h3> Tabla de valores acumulados </h3>
+                {% for table in tables2 %}
+                  {{ table|safe }}
+                {% endfor %}
+              {% endif %}
+            </div><!-- /.living-option-one__content -->
+          </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+      </div>
+    </div>
   </div>
-  <div class="column">
-    <p>
-      El objetivo es encontrar el estado óptimo del sistema y determinar una capacidad de servicio apropiada, Minimizar
-      el tiempo de atención y servicio
-      a los clientes o usuarios que llegan en un determinado tiempo. Cuenta con las siguientes relaciones matemáticas:
-      \[ La \ probabilidad \ de \ hallar \ el \ sistema \ ocupado: \ p=\lambda/\mu \]
-      \[ La \ probabilidad \ de \ que \ no \ haya \ unidades \ en \ el \ sistema: \ Po=1-\lambda/\mu \]
-      \[ Promedio \ de \ unidades \ en \ la \ linea \ de \ espera: \ Lq=\lambda^2/(\mu-\lambda)\mu \]
-      \[ Número \ esperado \ de \ clientes \ en \ el \ sistema: \ L=\lambda/\mu-\lambda \]
-      \[ Tiempo \ de \ espera \ en \ cola: Wq=\lambda/\mu(\mu-\lambda) \]
-      \[ El \ tiempo \ promedio \ que \ una \ unidad \ pasa \ en \ el \ sistema: \ W=1/(\mu-\lambda) \]
-      \[ La \ probabilidad \ de \ que \ haya \ n \ unidades \ en \ el \ sistema: \ Pn=(\lambda/\mu)^n Po \]
-      \[\]
-      {% if D != None %}
-      Para los datos ingresados los resultados serían los siguientes:
-      \[ La \ probabilidad \ de \ hallar \ el \ sistema \ ocupado: \ {{dato2}} \]
-      \[ La \ probabilidad \ de \ que \ no \ haya \ unidades \ en \ el \ sistema: \ {{dato3}} \]
-      \[ Promedio \ de \ unidades \ en \ la \ linea \ de \ espera: \ {{dato4}} \]
-      \[ Número \ esperado \ de \ clientes \ en \ el \ sistema: \ {{dato5}} \]
-      \[ Tiempo \ de \ espera \ en \ cola: {{dato7}} \]
-      \[ El \ tiempo \ promedio \ que \ una \ unidad \ pasa \ en \ el \ sistema: \ {{dato6}} \]
-      \[ La \ probabilidad \ de \ que \ haya \ n \ unidades \ en \ el \ sistema: \ {{dato8}} \]
-      {% endif %}
-    </p>
-  </div>
-</div>
-<div>
-  <div>
-
-    {% if D != None %}
-    <h2> Tabla de resultados </h2>
-    {% for table in tables %}
-    {{ table|safe }}
-    {% endfor %}
-
-
-    {% endif %}
-  </div>
-  <div>
-    {% if D != None %}
-
-    <h2> Gráfico de valores </h2>
-
-    <img src="{{ grafica }}" width="700">
-
-    {% endif %}
-  </div>
-  <div class="centered">
-    {% if D != None %}
-    <h2> Tabla de valores acumulados </h2>
-    {% for table in tables2 %}
-    {{ table|safe }}
-    {% endfor %}
-    {% endif %}
-  </div>
-  <div></div>
-
-</div>
-</div><!-- /container -->
-
+</section>
 <style>
-  img {
+  .grafica {
     display: block;
     margin-top: 20px;
     margin-left: auto;
