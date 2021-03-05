@@ -1,96 +1,81 @@
 {% extends "layout2.html" %}
 
 {% block content %}
-<div class="container demo-1">
-  <!-- Codrops top bar -->
-  <div class="codrops-top clearfix">
-    <span class="right"><a href="/static/ManualDeUsuario.pdf" target="_blank" ><strong>Manual de uso</strong></a></span>
-  </div>
-  <!--/ Codrops top bar -->
-  <header class="clearfix">
 
-    <h1 id="texthead"> Transformada Inversa </h1>
-    <div class="right">
-      <div id="dl-menu" class="dl-menuwrapper">
-        <button class="dl-trigger">Open Menu</button>
-        <ul class="dl-menu">
-          <li>
-            <a href="#">Método Monte Carlo</a>
-            <ul class="dl-submenu">
-              <li>
-                <a href="{{ url_for('metsim_api.montecarlo_aditivo') }}">Por congruencial aditivo</a>
-              </li>
-              <li>
-                <a href="{{ url_for('metsim_api.montecarlo_multiplicativo') }}">Por congruencial multiplicativo</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">Método de la transformada inversa</a>
-            <ul class="dl-submenu">
-              <li><a href="{{ url_for('metsim_api.transformada_inversa_aditivo') }}">Por congruencial aditivo</a></li>
-              <li><a href="{{ url_for('metsim_api.transformada_inversa_multiplicativo') }}">Por congruencial
-                  multiplicativo</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div><!-- /dl-menuwrapper -->
+<section class="page-header page-header__dark" style="background-image: url(/static/assets/images/background/random-bg.jpg);">
+  <div class="container">
+      <h2>Método de la transformada inversa</h2>
+      <ul class="list-unstyled thm-breadcrumb">
+          <li><a href="{{ url_for('index4') }}">Métodos de Simulación</a></li>
+          <li><span>Método de la transformada inversa</span></li>
+      </ul><!-- /.list-unstyled -->
+  </div><!-- /.container -->
+</section><!-- /.page-header -->
+
+<section class="living-option-one">
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li class="nav-item"><a href="{{ url_for('metsim_api.transformada_inversa_aditivo') }}" class="nav-link { {% if page == 'transinversaditivo' %} active {% endif %} }">Por congruencial aditivo</a></li>
+      <li class="nav-item"><a href="{{ url_for('metsim_api.transformada_inversa_multiplicativo') }}" class="nav-link { {% if page == 'transinversamultiplicativo' %} active {% endif %} }">Por congruencial multiplicativo</a></li>
+    </ul><!-- /.nav-tabs -->
+    <div class="mb-4">
+      <div class="tab-pane animated fadeInUp fade show">
+        <div class="row">
+          <div class="col-lg-6">
+            <form method=post action="">
+              {% for field in form %}
+                <div class="form-group">
+                  <label for="exampleInputEmail1">{{ field.label }}</label>
+                  {{ field }}
+                </div>
+              {% endfor %}
+              <!-- <input type=submit value=Calcular class="btn btn-primary"> -->
+              <button type="submit" class="btn btn-success">Calcular</button>
+            </form>
+          </div>
+          <div class="col-lg-6">
+            <div class="living-option-one__content">
+              <p>
+                Consiste en generar un numero aleatorio comprendido entre 0 y 1, luego identificarlo con la función de
+                distribución acumulativa F(x),
+                a través de la función inversa obtener el valor de x. Se tiene la siguiente función:
+                \[ F(x) = \int_{0}^{x}F(t)dt \]
+          
+                {% if N != None %}
+          
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </header>
-  <div class="main clearfix">
-    <form method=post action="">
-      <div class="column">
-        <table>
-          {% for field in form %}
-          <tr>
-            <td>{{ field.label }}</td>
-          </tr>
-          <tr>
-            <td>{{ field }}</td>
-          </tr>
-          {% endfor %}
-          <td>
-            <input type=submit value=Calcular>
-    </form>
-    <form method="get" action="{{ url_for('index4') }}">
-      <button type="submit">Regresar</button>
-    </form>
-          </td>
-        </table>
-        
+    <div class="mt-4">
+      <div class="tab-pane animated fadeInUp fade show">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="living-option-one__content">
+              {% if N != None %}
+                <h3>Tabla de valores</h3>
+                {% for table in tables %}
+                  {{ table|safe }}
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div><!-- /.col-lg-6 -->
+          <div class="col-lg-6">
+            <div class="living-option-one__content">
+              {% if N != None %}
+                <h3>Gráfica comparativa</h3>
+                <img src="{{ grafica }}" width="550">
+          
+              {% endif %}
+            </div><!-- /.living-option-one__content -->
+          </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+      </div>
+    </div>
   </div>
-  <div class="column">
-    <p>
-      Consiste en generar un numero aleatorio comprendido entre 0 y 1, luego identificarlo con la función de
-      distribución acumulativa F(x),
-      a través de la función inversa obtener el valor de x. Se tiene la siguiente función:
-      \[ F(x) = \int_{0}^{x}F(t)dt \]
-
-
-      {% if N != None %}
-
-
-      {% endif %}
-    </p>
-  </div>
-</div>
-<div class="main clearfix">
-  <div class="column">
-    {% if N != None %}
-    <h2>Tabla de valores</h2>
-    {% for table in tables %}
-    {{ table|safe }}
-    {% endfor %}
-    {% endif %}
-  </div>
-  <div class="column">
-    {% if N != None %}
-    <h2>Gráfica comparativa</h2>
-    <img src="{{ grafica }}" width="550">
-
-    {% endif %}
-  </div>
-</div>
-</div><!-- /container -->
+</section>
 
 {% endblock %}

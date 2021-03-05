@@ -1,56 +1,47 @@
 {% extends "layout.html" %}
 
 {% block content %}
-		<div class="container demo-4">	
-			<!-- Codrops top bar -->
-			<div class="codrops-top clearfix">
 
-				<span class="right"><a href="/static/ManualDeUsuario.pdf"  target="_blank"><strong>Manual de uso</strong></a></span>
-			</div><!--/ Codrops top bar -->
-			<header class="clearfix">
-				<h1>Técnicas de simulación <span>Un lugar para realizar tus cálculos</span></h1>	
-				<nav class="codrops-demos">
-					<a href="/">Métodos Randoms</a>
-					<a href="{{ url_for('index2') }}">Métodos Probabilísticos</a>
-					<a href="{{ url_for('index3') }}">Métodos Regresión</a>
-					<a class="current-demo" href="{{ url_for('index4') }}">Métodos Simulación</a>
-					<a href="{{ url_for('index5') }}">Modelos de simulación</a>
-				</nav>
-            </header>
-			<div class="main clearfix">
-				<div class="column">
-					<h1>Métodos de Simulación</h1>
+<section class="page-header" style="background-image: url(/static/assets/images/background/simulacion-bg.jpeg);">
+	<div class="container">
+		<h2>Métodos de Simulación</h2>
+	</div><!-- /.container -->
+</section><!-- /.page-header -->
+
+<section class="career-one">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="career-one__block">
+					<div class="block-title">
+						<h3>Métodos de Simulación</h3>
+					</div><!-- /.block-title -->
 					<p>La simulación es el producto de: El estudio del Sistema, la Modelación de los componentes del sistema, la utilización de Técnicas y herramientas
 						estadísticas, números aleatorios y pronósticos para obtener un completo informe de resultados junto con la utilización de un
 						Lenguaje de programación que nos permita realizar el análisis de datos. Esta es una valiosa herramienta que puede para una amplia variedad de
 						 problemas prácticos de la via real.</p>
-				</div>
-				<div class="column">
-					<div id="dl-menu" class="dl-menuwrapper">
-						<button class="dl-trigger">Open Menu</button>
-						<ul class="dl-menu">
+				</div><!-- /.career-one__block -->
+			</div><!-- /.col-lg-6 -->
+			<div class="col-lg-6">
+				<div class="sidebar">
+					<div class="sidebar__single sidebar__category">
+						<h3 class="sidebar__title">Métodos</h3><!-- /.sidebar__title -->
+						<ul class="sidebar__cat-list">
 							<li>
-								<a href="#">Método Monte Carlo</a>
-								<ul class="dl-submenu">
-									<li>
-										<a href="{{ url_for('metsim_api.montecarlo_aditivo') }}">Por congruencial aditivo</a>
-									</li>
-									<li>
-										<a href="{{ url_for('metsim_api.montecarlo_multiplicativo') }}">Por congruencial multiplicativo</a>
-									</li>
-								</ul>
+								<p>Método Monte Carlo</p>
 							</li>
+							<li><a href="{{ url_for('metsim_api.montecarlo_aditivo') }}">Por congruencial aditivo</a></li>
+							<li><a href="{{ url_for('metsim_api.montecarlo_multiplicativo') }}">Por congruencial multiplicativo</a></li>
 							<li>
-								<a href="#">Método de la transformada inversa</a>
-								<ul class="dl-submenu">
-									<li><a href="{{ url_for('metsim_api.transformada_inversa_aditivo') }}">Por congruencial aditivo</a></li>
-									<li><a href="{{ url_for('metsim_api.transformada_inversa_multiplicativo') }}">Por congruencial multiplicativo</a></li>
-								</ul>
+								<p>Método de la transformada inversa</p>
 							</li>
-						</ul>
-					</div><!-- /dl-menuwrapper -->
+							<li><a href="{{ url_for('metsim_api.transformada_inversa_aditivo') }}">Por congruencial aditivo</a></li>
+							<li><a href="{{ url_for('metsim_api.transformada_inversa_multiplicativo') }}">Por congruencial multiplicativo</a></li>
+						</ul><!-- /.sidebar__cat-list -->
+					</div><!-- /.sidebar__single -->
 				</div>
-			</div>
-		</div><!-- /container -->
-
+			</div><!-- /.col-lg-6 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</section><!-- /.career-one -->
 {% endblock %}

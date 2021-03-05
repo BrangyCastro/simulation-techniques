@@ -19,6 +19,7 @@ metsim_api = Blueprint('metsim_api', __name__)
 
 @metsim_api.route('/montecarloaditivo', methods=("POST", "GET"))
 def montecarlo_aditivo():
+    page = "montecarloaditivo"
     class InputForm(Form):
         L = StringField(
             label='Escriba los valores de ingreso separados por comas (,)', default='5501.0, 6232.7, 8118.3, 10137.00, 10449.50, 12794.60, 9939.10,  13193.00, 16036.2, 18496.90, 18709.30, 19363.50, 16521.50, 15175.40,  16927.00',
@@ -126,7 +127,7 @@ def montecarlo_aditivo():
         dfMCL["Simulación"] = pd.DataFrame(simula)
         df2 = dfMCL
         return render_template('/metspages/metsim/montecarlo.html', form=form, tables=[df1.to_html(classes='data')], tables2=[df2.to_html(classes='data')], suma=suma,vald1=dfval[0],
-        cant=cant,dfprob=dfprob[0])
+        cant=cant,dfprob=dfprob[0], page=page)
     else:
         N = None
         M = None
@@ -139,12 +140,11 @@ def montecarlo_aditivo():
         cant= None
         suma= None
         dfprob = None
-    return render_template('/metspages/metsim/montecarlo.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica,suma=suma,vald1=vald1,cant=cant,dfprob=dfprob)
-
-
+    return render_template('/metspages/metsim/montecarlo.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica,suma=suma,vald1=vald1,cant=cant,dfprob=dfprob, page=page)
 
 @metsim_api.route('/montecarlomultiplicativo', methods=("POST", "GET"))
 def montecarlo_multiplicativo():
+    page = "montecarlomultiplicativo"
     class InputForm(Form):
         L = StringField(
             label='Escriba los valores de ingreso separados por comas (,)', default='5501.0, 6232.7, 8118.3, 10137.00, 10449.50, 12794.60, 9939.10,  13193.00, 16036.2, 18496.90, 18709.30, 19363.50, 16521.50, 15175.40,  16927.00',
@@ -249,7 +249,7 @@ def montecarlo_multiplicativo():
         dfMCL["Simulación"] = pd.DataFrame(simula)
         df2 = dfMCL
         return render_template('/metspages/metsim/montecarlo.html', form=form, tables=[df1.to_html(classes='data')], tables2=[df2.to_html(classes='data')], suma=suma,vald1=dfval[0],
-        cant=cant,dfprob=dfprob[0])
+        cant=cant,dfprob=dfprob[0], page=page)
     else:
         N = None
         M = None
@@ -262,11 +262,11 @@ def montecarlo_multiplicativo():
         cant= None
         suma= None
         dfprob = None
-    return render_template('/metspages/metsim/montecarlo.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica,suma=suma,vald1=vald1,cant=cant,dfprob=dfprob)
-
+    return render_template('/metspages/metsim/montecarlo.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica,suma=suma,vald1=vald1,cant=cant,dfprob=dfprob, page=page)
 
 @metsim_api.route('/transinversaditivo', methods=("POST", "GET"))
 def transformada_inversa_aditivo():
+    page = "transinversaditivo"
     class InputForm(Form):
         L = FloatField(
             label='Ingrese el valor de landa', default=0.2,
@@ -325,7 +325,7 @@ def transformada_inversa_aditivo():
         plt.savefig(plotfile)
         plt.clf()
 
-        return render_template('/metspages/metsim/transinversa.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile)
+        return render_template('/metspages/metsim/transinversa.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile, page=page)
     else:
         N = None
         M = None
@@ -334,11 +334,11 @@ def transformada_inversa_aditivo():
         C = None
         L = None
         grafica = None
-    return render_template('/metspages/metsim/transinversa.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica)
-
+    return render_template('/metspages/metsim/transinversa.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica, page=page)
 
 @metsim_api.route('/transinversamultiplicativo', methods=("POST", "GET"))
 def transformada_inversa_multiplicativo():
+    page = "transinversamultiplicativo"
     class InputForm(Form):
         L = FloatField(
             label='Ingrese el valor de landa', default=0.2,
@@ -392,7 +392,7 @@ def transformada_inversa_multiplicativo():
         plt.savefig(plotfile)
         plt.clf()
 
-        return render_template('/metspages/metsim/transinversa.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile)
+        return render_template('/metspages/metsim/transinversa.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile, page=page)
     else:
         N = None
         M = None
@@ -400,4 +400,4 @@ def transformada_inversa_multiplicativo():
         X0 = None
         L = None
         grafica = None
-    return render_template('/metspages/metsim/transinversa.html', form=form, L=L, N=N, M=M, A=A, X0=X0, grafica=grafica)
+    return render_template('/metspages/metsim/transinversa.html', form=form, L=L, N=N, M=M, A=A, X0=X0, grafica=grafica, page=page)

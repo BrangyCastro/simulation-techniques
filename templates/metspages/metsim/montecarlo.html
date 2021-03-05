@@ -1,112 +1,99 @@
 {% extends "layout2.html" %}
 
 {% block content %}
-<div class="container demo-1">
-  <!-- Codrops top bar -->
-  <div class="codrops-top clearfix">
-    <span class="right"><a href="/static/ManualDeUsuario.pdf" target="_blank" ><strong>Manual de uso</strong></a></span>
-  </div>
-  <!--/ Codrops top bar -->
-  <header class="clearfix">
 
-    <h1 id="texthead"> Monte carlo </h1>
-    <div class="right">
-      <div id="dl-menu" class="dl-menuwrapper">
-        <button class="dl-trigger">Open Menu</button>
-        <ul class="dl-menu">
-          <li>
-            <a href="#">Método Monte Carlo</a>
-            <ul class="dl-submenu">
-              <li>
-                <a href="{{ url_for('metsim_api.montecarlo_aditivo') }}">Por congruencial aditivo</a>
-              </li>
-              <li>
-                <a href="{{ url_for('metsim_api.montecarlo_multiplicativo') }}">Por congruencial multiplicativo</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">Método de la transformada inversa</a>
-            <ul class="dl-submenu">
-              <li><a href="{{ url_for('metsim_api.transformada_inversa_aditivo') }}">Por congruencial aditivo</a></li>
-              <li><a href="{{ url_for('metsim_api.transformada_inversa_multiplicativo') }}">Por congruencial
-                  multiplicativo</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div><!-- /dl-menuwrapper -->
+<section class="page-header page-header__dark" style="background-image: url(/static/assets/images/background/random-bg.jpg);">
+  <div class="container">
+      <h2>Método Monte Carlo</h2>
+      <ul class="list-unstyled thm-breadcrumb">
+          <li><a href="{{ url_for('index4') }}">Métodos de Simulación</a></li>
+          <li><span>Método Monte Carlo</span></li>
+      </ul><!-- /.list-unstyled -->
+  </div><!-- /.container -->
+</section><!-- /.page-header -->
+
+<section class="living-option-one">
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li class="nav-item"><a href="{{ url_for('metsim_api.montecarlo_aditivo') }}" class="nav-link { {% if page == 'montecarloaditivo' %} active {% endif %} }">Por congruencial aditivo</a></li>
+			<li class="nav-item"><a href="{{ url_for('metsim_api.montecarlo_multiplicativo') }}" class="nav-link { {% if page == 'montecarlomultiplicativo' %} active {% endif %} }">Por congruencial multiplicativo</a></li>
+    </ul><!-- /.nav-tabs -->
+    <div class="mb-4">
+      <div class="tab-pane animated fadeInUp fade show">
+        <div class="row">
+          <div class="col-lg-6">
+            <form method=post action="">
+              {% for field in form %}
+                <div class="form-group">
+                  <label for="exampleInputEmail1">{{ field.label }}</label>
+                  {{ field }}
+                </div>
+              {% endfor %}
+              <!-- <input type=submit value=Calcular class="btn btn-primary"> -->
+              <button type="submit" class="btn btn-success">Calcular</button>
+            </form>
+          </div>
+          <div class="col-lg-6">
+            <div class="living-option-one__content">
+              <p>
+
+                El método de Montecarlo abarcan una colección de técnicas que permiten obtener soluciones de problemas matemáticos
+                o
+                físicos por medio de pruebas aleatorias repetidas. Es por esto que no se le puede asignar una fórmula general,
+                sino que se
+                adapta al problema en concreto basandose en los pasos que sigue este método.
+                \[\]
+                {% if N != None %}
+                Para este caso en particular, una vez ingresados los datos sacamos la probabilidad de cada valor, esto se hace
+                sumando
+                todos los valores ingresados primero, para luego dividir cada valor por la suma realizada anteriormente, por
+                ejemplo para el primer dato tenemos:
+                \[ { \sum(datos) \over {{cant}} } = {{suma}} \]
+                \[ { {{vald1}} \over {{suma}} } = {{dfprob}} \]
+                Luego sacamos la \(FPA\) (probabilidad acumulada) y los \(mínimos\) y \(máximos\), donde la \(FPA\) actual va a
+                ser la suma
+                de la probabilidad del dato anterior con la probabilidad del dato actual, mientras que para \(mínimos\) y
+                \(máximos\), el mínimo
+                va a ser la \(FPA\) anterior, y para el máximo la \(FPA\) actual. Todo se puede apreciar mejor en el gráfico.
+                \[\]
+                Por último generamos nuestros números aleatorios por el generador de nuestra preferencia, y buscamos entre que
+                rango se encuentra este número
+                para determinar a que valor corresponde y así generar nuestos datos de la simulación.
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </header>
-  <div class="main clearfix">
-    <form method=post action="">
-      <div class="column">
-        <table>
-          {% for field in form %}
-          <tr>
-            <td>{{ field.label }}</td>
-          </tr>
-          <tr>
-            <td>{{ field }}</td>
-          </tr>
-          {% endfor %}
-          <td>
-            <input type=submit value=Calcular>
-    </form>
-    <form method="get" action="{{ url_for('index4') }}">
-      <button type="submit">Regresar</button>
-    </form>
-    </td>
-    </table>
+    <div class="mt-4">
+      <div class="tab-pane animated fadeInUp fade show">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="living-option-one__content">
+              {% if N != None %}
+                <h3>Tabla de probabilidesde mínimas y máximas</h3>
+                {% for table in tables %}
+                  {{ table|safe }}
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div><!-- /.col-lg-6 -->
+          <div class="col-lg-6">
+            <div class="living-option-one__content">
+              {% if N != None %}
+                <h3>Tabla de la simulación</h3>
+                {% for table in tables2 %}
+                  {{ table|safe }}
+                {% endfor %}
 
+              {% endif %}
+            </div><!-- /.living-option-one__content -->
+          </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+      </div>
+    </div>
   </div>
-  <div class="column">
-    <p>
-
-      El método de Montecarlo abarcan una colección de técnicas que permiten obtener soluciones de problemas matemáticos
-      o
-      físicos por medio de pruebas aleatorias repetidas. Es por esto que no se le puede asignar una fórmula general,
-      sino que se
-      adapta al problema en concreto basandose en los pasos que sigue este método.
-      \[\]
-      {% if N != None %}
-      Para este caso en particular, una vez ingresados los datos sacamos la probabilidad de cada valor, esto se hace
-      sumando
-      todos los valores ingresados primero, para luego dividir cada valor por la suma realizada anteriormente, por
-      ejemplo para el primer dato tenemos:
-      \[ { \sum(datos) \over {{cant}} } = {{suma}} \]
-      \[ { {{vald1}} \over {{suma}} } = {{dfprob}} \]
-      Luego sacamos la \(FPA\) (probabilidad acumulada) y los \(mínimos\) y \(máximos\), donde la \(FPA\) actual va a
-      ser la suma
-      de la probabilidad del dato anterior con la probabilidad del dato actual, mientras que para \(mínimos\) y
-      \(máximos\), el mínimo
-      va a ser la \(FPA\) anterior, y para el máximo la \(FPA\) actual. Todo se puede apreciar mejor en el gráfico.
-      \[\]
-      Por último generamos nuestros números aleatorios por el generador de nuestra preferencia, y buscamos entre que
-      rango se encuentra este número
-      para determinar a que valor corresponde y así generar nuestos datos de la simulación.
-      {% endif %}
-    </p>
-  </div>
-</div>
-<div class="main clearfix">
-  <div class="column">
-    {% if N != None %}
-    <h2>Tabla de probabilidesde mínimas y máximas</h2>
-    {% for table in tables %}
-    {{ table|safe }}
-    {% endfor %}
-    {% endif %}
-  </div>
-  <div class="column">
-    {% if N != None %}
-    <h2>Tabla de la simulación</h2>
-    {% for table in tables2 %}
-    {{ table|safe }}
-    {% endfor %}
-
-    {% endif %}
-  </div>
-</div>
-</div><!-- /container -->
+</section>
 
 {% endblock %}
