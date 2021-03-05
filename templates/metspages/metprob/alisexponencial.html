@@ -1,84 +1,77 @@
 {% extends "layout2.html" %}
 
 {% block content %}
-<div class="container demo-1">
-  <!-- Codrops top bar -->
-  <div class="codrops-top clearfix">
-    <span class="right"><a href="/static/ManualDeUsuario.pdf" target="_blank" ><strong>Manual de uso</strong></a></span>
-  </div>
-  <!--/ Codrops top bar -->
-  <header class="clearfix">
-
-    <h1 id="texthead"> Alisamiento exponencial </h1>
-    <div class="right">
-      <div id="dl-menu" class="dl-menuwrapper">
-        <button class="dl-trigger">Open Menu</button>
-        <ul class="dl-menu">
-          <li>
-            <a href="{{ url_for('metprob_api.promedio_movil') }}">Promedio Movil</a>
-            <a href="{{ url_for('metprob_api.alisamiento_exponencial') }}">Alisamiento Exponencial</a>
-          </li>
-        </ul>
-      </div><!-- /dl-menuwrapper -->
+<section class="page-header page-header__dark" style="background-image: url(/static/assets/images/background/probabilistico-bg.jpg);">
+  <div class="container">
+      <h2>Alisamiento exponencial</h2>
+      <ul class="list-unstyled thm-breadcrumb">
+          <li><a href="{{ url_for('index2') }}">Métodos Probabilísticos</a></li>
+          <li><span>Alisamiento exponencial</span></li>
+      </ul><!-- /.list-unstyled -->
+  </div><!-- /.container -->
+</section><!-- /.page-header -->
+<section class="living-option-one">
+  <div class="container">
+    <div class="mb-4">
+      <div class="tab-pane animated fadeInUp fade show">
+        <div class="row">
+          <div class="col-lg-6">
+            <form method=post action="">
+              {% for field in form %}
+                <div class="form-group">
+                  <label for="exampleInputEmail1">{{ field.label }}</label>
+                  {{ field }}
+                </div>
+              {% endfor %}
+              <button type="submit" class="btn btn-success">Calcular</button>
+            </form>
+          </div>
+          <div class="col-lg-6">
+            <div class="living-option-one__content">
+              <p>
+                Para el alisamiento exponencial se tiene la siguiente fórmula:
+                \[ \propto(Xn-1) + (1-\propto)Sn-1 \]
+                Donde \(\propto\) es la constante de suavización entre 0 y 1, \(Xn-1\) es el valor real de la serie
+                y \(Sn-1\) es el pronóstico de la serie.
+                \[\]
+                {% if N != None %}
+                Para el ejercicio la fórmula quedaría:
+                \[ {{ M }}( {{ res1 }} ) + (1- {{ M }} ){{ res2 }} = {{ res3 }} \]
+                Y así sucesivamente para sacar los siguientes pronósticos, siempres cambiando los valores en la fórmula.
+                Para el error basta con restar el valor de la etapa actual con el alisamiento hallado:
+                \[{{ res5 }} + {{ res3 }} = {{ res4 }} \]
+          
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </header>
-  <div class="main clearfix">
-    <form method=post action="">
-      <div class="column">
-        <table>
-          {% for field in form %}
-          <tr>
-            <td>{{ field.label }}</td>
-          </tr>
-          <tr>
-            <td>{{ field }}</td>
-          </tr>
-          {% endfor %}
-          <td>
-            <input type=submit value=Calcular>
-    </form>
-    <form method="get" action="{{ url_for('index2') }}">
-      <button type="submit">Regresar</button>
-    </form>
-    </td>
-    </table>
-
+    <div class="mt-4">
+      <div class="tab-pane animated fadeInUp fade show">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="living-option-one__content">
+              {% if N != None %}
+                <h3>Tabla de valores y resultados</h3>
+                {% for table in tables %}
+                  {{ table|safe }}
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="living-option-one__content">
+              {% if N != None %}
+                <h3>Gráfico comparativo de valores y resultados</h3>
+                <img src="{{ grafica }}" width="550">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="column">
-    <p>
-      Para el alisamiento exponencial se tiene la siguiente fórmula:
-      \[ \propto(Xn-1) + (1-\propto)Sn-1 \]
-      Donde \(\propto\) es la constante de suavización entre 0 y 1, \(Xn-1\) es el valor real de la serie
-      y \(Sn-1\) es el pronóstico de la serie.
-      \[\]
-      {% if N != None %}
-      Para el ejercicio la fórmula quedaría:
-      \[ {{ M }}( {{ res1 }} ) + (1- {{ M }} ){{ res2 }} = {{ res3 }} \]
-      Y así sucesivamente para sacar los siguientes pronósticos, siempres cambiando los valores en la fórmula.
-      Para el error basta con restar el valor de la etapa actual con el alisamiento hallado:
-      \[{{ res5 }} + {{ res3 }} = {{ res4 }} \]
-
-      {% endif %}
-    </p>
-  </div>
-</div>
-<div class="main clearfix">
-  <div class="column">
-    {% if N != None %}
-    <h2>Tabla de valores y resultados</h2>
-    {% for table in tables %}
-    {{ table|safe }}
-    {% endfor %}
-    {% endif %}
-  </div>
-  <div class="column">
-    {% if N != None %}
-    <h2>Gráfico comparativo de valores y resultados</h2>
-    <img src="{{ grafica }}" width="550">
-
-    {% endif %}
-  </div>
-</div>
-</div><!-- /container -->
-
+</section>
 {% endblock %}

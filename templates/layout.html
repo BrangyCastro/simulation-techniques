@@ -35,7 +35,12 @@
 		 <link rel="stylesheet" href="/static/assets/css/responsive.css">
 	</head>
 	<body>
-		
+		<div class="preloader">
+			<div class="lds-ripple">
+				<div></div>
+				<div></div>
+			</div>
+		</div><!-- /.preloader -->
 		<div class="page-wrapper">
 			<section class="topbar-one topbar-one__inner-page">
 				<div class="container">
@@ -80,7 +85,7 @@
 								<li class="dropdown">
 									<a href="{{ url_for('index2') }}">Probabilísticos</a>
 									<ul>
-										<li><a href="{{ url_for('metprob_api.promedio_movil') }}">Promedio Movil</a></li>
+										<li><a href="{{ url_for('metprob_api.promedio_movil') }}">Promedio Móvil</a></li>
 										<li><a href="{{ url_for('metprob_api.alisamiento_exponencial') }}">Alisamiento Exponencial</a></li>
 									</ul>
 								</li>
