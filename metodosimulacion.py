@@ -22,7 +22,7 @@ metodo_simulacion_api = Blueprint('metodo_simulacion_api', __name__)
 style = {'class': 'form-control', "rows": 3}
 
 
-@metodo_simulacion_api.route('/simulacion/montecarloaditivo', methods=("POST", "GET"))
+@metodo_simulacion_api.route('/montecarloaditivo', methods=("POST", "GET"))
 def montecarlo_aditivo():
     page = "montecarloaditivo"
 
@@ -139,7 +139,7 @@ def montecarlo_aditivo():
                 simula.append(round(a, 2))
         dfMCL["Simulación"] = pd.DataFrame(simula)
         df2 = dfMCL
-        return render_template('/metspages/metsim/montecarlo.html', form=form, tables=[df1.to_html(classes='data')], tables2=[df2.to_html(classes='data')], suma=suma, vald1=dfval[0],
+        return render_template('/metspages/metsim/montecarlo.html', form=form, tables=[df1.to_html(classes='table table-hover')], tables2=[df2.to_html(classes='table table-hover')], suma=suma, vald1=dfval[0],
                                cant=cant, dfprob=dfprob[0], page=page)
     else:
         N = None
@@ -156,7 +156,7 @@ def montecarlo_aditivo():
     return render_template('/metspages/metsim/montecarlo.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica, suma=suma, vald1=vald1, cant=cant, dfprob=dfprob, page=page)
 
 
-@metodo_simulacion_api.route('/simulacion/montecarlomultiplicativo', methods=("POST", "GET"))
+@metodo_simulacion_api.route('/montecarlomultiplicativo', methods=("POST", "GET"))
 def montecarlo_multiplicativo():
     page = "montecarlomultiplicativo"
 
@@ -270,7 +270,7 @@ def montecarlo_multiplicativo():
                 simula.append(round(a, 2))
         dfMCL["Simulación"] = pd.DataFrame(simula)
         df2 = dfMCL
-        return render_template('/metspages/metsim/montecarlo.html', form=form, tables=[df1.to_html(classes='data')], tables2=[df2.to_html(classes='data')], suma=suma, vald1=dfval[0],
+        return render_template('/metspages/metsim/montecarlo.html', form=form, tables=[df1.to_html(classes='table table-hover')], tables2=[df2.to_html(classes='table table-hover')], suma=suma, vald1=dfval[0],
                                cant=cant, dfprob=dfprob[0], page=page)
     else:
         N = None
@@ -287,7 +287,7 @@ def montecarlo_multiplicativo():
     return render_template('/metspages/metsim/montecarlo.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica, suma=suma, vald1=vald1, cant=cant, dfprob=dfprob, page=page)
 
 
-@metodo_simulacion_api.route('/simulacion/transinversaditivo', methods=("POST", "GET"))
+@metodo_simulacion_api.route('/transinversaditivo', methods=("POST", "GET"))
 def transformada_inversa_aditivo():
     page = "transinversaditivo"
 
@@ -349,7 +349,7 @@ def transformada_inversa_aditivo():
         plt.savefig(plotfile)
         plt.clf()
 
-        return render_template('/metspages/metsim/transinversa.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile, page=page)
+        return render_template('/metspages/metsim/transinversa.html', form=form, tables=[df.to_html(classes='table table-hover')], grafica=plotfile, page=page)
     else:
         N = None
         M = None
@@ -361,7 +361,7 @@ def transformada_inversa_aditivo():
     return render_template('/metspages/metsim/transinversa.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica, page=page)
 
 
-@metodo_simulacion_api.route('/simulacion/transinversamultiplicativo', methods=("POST", "GET"))
+@metodo_simulacion_api.route('/transinversamultiplicativo', methods=("POST", "GET"))
 def transformada_inversa_multiplicativo():
     page = "transinversamultiplicativo"
 
@@ -418,7 +418,7 @@ def transformada_inversa_multiplicativo():
         plt.savefig(plotfile)
         plt.clf()
 
-        return render_template('/metspages/metsim/transinversa.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile, page=page)
+        return render_template('/metspages/metsim/transinversa.html', form=form, tables=[df.to_html(classes='table table-hover')], grafica=plotfile, page=page)
     else:
         N = None
         M = None

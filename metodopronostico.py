@@ -21,7 +21,7 @@ metodo_pronostico_api = Blueprint('metodo_pronostico_api', __name__)
 style = {'class': 'form-control'}
 
 
-@metodo_pronostico_api.route('/pronostico/prommovil', methods=("POST", "GET"))
+@metodo_pronostico_api.route('/prommovil', methods=("POST", "GET"))
 def promedio_movil():
     class InputForm(Form):
         N = TextAreaField(
@@ -98,7 +98,7 @@ def promedio_movil():
         plt.clf()
 
         del df['Año']
-        return render_template('/metspages/metprob/prommovil.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile, res1=resv1,
+        return render_template('/metspages/metprob/prommovil.html', form=form, tables=[df.to_html(classes='table table-hover')], grafica=plotfile, res1=resv1,
                                res2=resv2, res3=resv3, res4=resv4, res5=resv5, res6=resv6, res7=resv7, res8=resv8)
     else:
         N = None
@@ -114,7 +114,7 @@ def promedio_movil():
                            res2=resv2, res3=resv3, res4=resv4, res5=resv5, res6=resv6, res7=resv7, res8=resv8)
 
 
-@metodo_pronostico_api.route('/pronostico/alisexponencial', methods=("POST", "GET"))
+@metodo_pronostico_api.route('/alisexponencial', methods=("POST", "GET"))
 def alisamiento_exponencial():
     class InputForm(Form):
         N = TextAreaField(
@@ -185,7 +185,7 @@ def alisamiento_exponencial():
         # movil
         # %matplotlib inline
 
-        return render_template('/metspages/metprob/alisexponencial.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile, M=alfa, res1=resv1, res2=resv2, res3=resv3, res4=resv4, res5=resv5)
+        return render_template('/metspages/metprob/alisexponencial.html', form=form, tables=[df.to_html(classes='table table-hover')], grafica=plotfile, M=alfa, res1=resv1, res2=resv2, res3=resv3, res4=resv4, res5=resv5)
     else:
         N = None
         M = None

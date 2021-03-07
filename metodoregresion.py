@@ -20,7 +20,7 @@ metodo_regresion_api = Blueprint('metodo_regresion_api', __name__)
 style = {'class': 'form-control', "rows": 3}
 
 
-@metodo_regresion_api.route('/regresion/lineal', methods=("POST", "GET"))
+@metodo_regresion_api.route('/lineal', methods=("POST", "GET"))
 def regresion_lineal():
     class InputForm(Form):
         N = TextAreaField(
@@ -97,7 +97,7 @@ def regresion_lineal():
         plt.savefig(plotfile)
         plt.clf()
 
-        return render_template('/metspages/metreg/reglineal.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile, cant=cant, sum1=sum1,
+        return render_template('/metspages/metreg/reglineal.html', form=form, tables=[df.to_html(classes='table table-hover')], grafica=plotfile, cant=cant, sum1=sum1,
                                sum2=sum2, sum3=sum3, sum4=sum4, P0=P0, P1=P1, fin=pfinal)
     else:
         N = None
@@ -113,7 +113,7 @@ def regresion_lineal():
     return render_template('/metspages/metreg/reglineal.html', form=form, N=N, M=M, cant=cant, sum1=sum1, sum2=sum2, sum3=sum3, sum4=sum4, P0=P0, P1=P1, fin=fin)
 
 
-@metodo_regresion_api.route('/regresion/nolineal', methods=("POST", "GET"))
+@metodo_regresion_api.route('/nolineal', methods=("POST", "GET"))
 def regresion_no_lineal():
     class InputForm(Form):
         N = TextAreaField(
@@ -233,7 +233,7 @@ def regresion_no_lineal():
         plt.savefig(plotfile)
         plt.clf()
 
-        return render_template('/metspages/metreg/regnolineal.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile, sum1=sum1,
+        return render_template('/metspages/metreg/regnolineal.html', form=form, tables=[df.to_html(classes='table table-hover')], grafica=plotfile, sum1=sum1,
                                sum2=sum2, sum3=sum3, sum4=sum4, sum5=sum5, sum6=sum6, sum7=sum7, P0=P0, P1=P1, P2=P2, cant=cantidad, pron=PRED, res=res)
     else:
         N = None

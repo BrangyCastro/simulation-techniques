@@ -14,7 +14,6 @@
 }
 
 .dl-menuwrapper button {
-  background: rgb(62, 64, 158);
   border: none;
   width: 48px;
   height: 45px;
@@ -65,7 +64,6 @@
 }
 
 .no-touch .dl-menuwrapper li a:hover {
-  background: #322964;
 }
 
 .dl-menuwrapper li.dl-back > a {
@@ -761,76 +759,3 @@ All this is done for any sub-level being entered.
 }
 
 /* Colors for demos */
-
-/* Demo 1 */
-.demo-1 .dl-menuwrapper button {
-  background: #2c189e;
-}
-
-.demo-1 .dl-menuwrapper button:hover,
-.demo-1 .dl-menuwrapper button.dl-active,
-.demo-1 .dl-menuwrapper ul {
-  background: #231d44;
-}
-
-/* Demo 2 */
-.demo-2 .dl-menuwrapper button {
-  background: #2c189e;
-}
-
-.demo-2 .dl-menuwrapper button:hover,
-.demo-2 .dl-menuwrapper button.dl-active,
-.demo-2 .dl-menuwrapper ul {
-  background: #231d44;
-}
-
-/* Demo 3 */
-.demo-3 .dl-menuwrapper button {
-  background: #2c189e;
-}
-
-.demo-3 .dl-menuwrapper button:hover,
-.demo-3 .dl-menuwrapper button.dl-active,
-.demo-3 .dl-menuwrapper ul {
-  background: #231d44;
-}
-
-/* Demo 4 */
-.demo-4 .dl-menuwrapper button {
-  background: #2c189e;
-}
-
-.demo-4 .dl-menuwrapper button:hover,
-.demo-4 .dl-menuwrapper button.dl-active,
-.demo-4 .dl-menuwrapper ul {
-  background: #231d44;
-}
-
-/* Demo 5 */
-.demo-5 .dl-menuwrapper button {
-  background: #2c189e;
-}
-
-.demo-5 .dl-menuwrapper button:hover,
-.demo-5 .dl-menuwrapper button.dl-active,
-.demo-5 .dl-menuwrapper ul {
-  background: #231d44;
-}
-
-footer {
-  padding: 5px;
-  background-color: #231d44;
-  color: #ffee00;
-}
-
-.thefooter a {
-  color: #ffffff;
-  text-align: left;
-}
-.footerR {
-  text-align: right;
-}
-
-.setdivision {
-  column-count: 2;
-}

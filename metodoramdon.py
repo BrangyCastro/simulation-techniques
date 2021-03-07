@@ -22,7 +22,7 @@ metodo_ramdon_api = Blueprint('metodo_ramdon_api', __name__)
 style = {'class': 'form-control'}
 
 
-@metodo_ramdon_api.route('/random/cuadmedio', methods=("POST", "GET"))
+@metodo_ramdon_api.route('/cuadmedio', methods=("POST", "GET"))
 def cuadrado_medio():
     class InputForm(Form):
         N = IntegerField(
@@ -85,7 +85,7 @@ def cuadrado_medio():
         plotfile = os.path.join('static', str(time.time()) + '.png')
         plt.savefig(plotfile)
         plt.clf()
-        return render_template('/metspages/metran/cuadmedio.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile, N=n, R=r,
+        return render_template('/metspages/metran/cuadmedio.html', form=form, tables=[df.to_html(classes='table table-hover')], grafica=plotfile, N=n, R=r,
                                res=reserva, res2=reserva2, res3=reserva3, res4=reserva4, res5=l)
     else:
         N = None
@@ -98,7 +98,7 @@ def cuadrado_medio():
     return render_template('/metspages/metran/cuadmedio.html', form=form, N=N, R=R, res=reserva, res2=reserva2, res3=reserva3, res4=reserva4, res5=res5)
 
 
-@metodo_ramdon_api.route('/random/congaditivo', methods=("POST", "GET"))
+@metodo_ramdon_api.route('/congaditivo', methods=("POST", "GET"))
 def congruencial_aditivo():
     class InputForm(Form):
         X0 = IntegerField(
@@ -165,7 +165,7 @@ def congruencial_aditivo():
         plotfile = os.path.join('static', str(time.time()) + '.png')
         plt.savefig(plotfile)
         plt.clf()
-        return render_template('/metspages/metran/congaditivo.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile,
+        return render_template('/metspages/metran/congaditivo.html', form=form, tables=[df.to_html(classes='table table-hover')], grafica=plotfile,
                                N=resv1, M=resv2, A=resv3, X0=resv4, C=resv5, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10)
     else:
         N = None
@@ -181,7 +181,7 @@ def congruencial_aditivo():
     return render_template('/metspages/metran/congaditivo.html', form=form, N=N, M=M, A=A, X0=X0, C=C, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10)
 
 
-@metodo_ramdon_api.route('/random/congmultiplicativo', methods=("POST", "GET"))
+@metodo_ramdon_api.route('/congmultiplicativo', methods=("POST", "GET"))
 def congruencial_multiplicativo_autogenerado():
     page = "congmultiplicativo"
 
@@ -250,7 +250,7 @@ def congruencial_multiplicativo_autogenerado():
         plt.savefig(plotfile)
         plt.clf()
 
-        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='data')],
+        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='table table-hover')],
                                grafica=plotfile, N=resv1, M=resv2, A=resv3, X0=resv4, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)
     else:
         N = None
@@ -265,7 +265,7 @@ def congruencial_multiplicativo_autogenerado():
     return render_template('/metspages/metran/congmultiplicativo.html', form=form, N=N, M=M, A=A, X0=X0, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)
 
 
-@metodo_ramdon_api.route('/random/congmultiplicativo30264', methods=("POST", "GET"))
+@metodo_ramdon_api.route('/congmultiplicativo30264', methods=("POST", "GET"))
 def congruencial_multiplicativo_30264():
     page = "congmultiplicativo30264"
 
@@ -325,7 +325,7 @@ def congruencial_multiplicativo_30264():
         plt.savefig(plotfile)
         plt.clf()
 
-        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='data')],
+        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='table table-hover')],
                                grafica=plotfile, N=resv1, M=resv2, A=resv3, X0=resv4, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)
     else:
         N = None
@@ -340,7 +340,7 @@ def congruencial_multiplicativo_30264():
     return render_template('/metspages/metran/congmultiplicativo.html', form=form, N=N, M=M, A=A, X0=X0, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)
 
 
-@metodo_ramdon_api.route('/random/congmultiplicativo30307', methods=("POST", "GET"))
+@metodo_ramdon_api.route('/congmultiplicativo30307', methods=("POST", "GET"))
 def congruencial_multiplicativo_30307():
     page = "congmultiplicativo30307"
 
@@ -399,7 +399,7 @@ def congruencial_multiplicativo_30307():
         plt.savefig(plotfile)
         plt.clf()
 
-        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='data')],
+        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='table table-hover')],
                                grafica=plotfile, N=resv1, M=resv2, A=resv3, X0=resv4, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)
     else:
         N = None
@@ -414,7 +414,7 @@ def congruencial_multiplicativo_30307():
     return render_template('/metspages/metran/congmultiplicativo.html', form=form, N=N, M=M, A=A, X0=X0, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)
 
 
-@metodo_ramdon_api.route('/random/congmultiplicativo30323', methods=("POST", "GET"))
+@metodo_ramdon_api.route('/congmultiplicativo30323', methods=("POST", "GET"))
 def congruencial_multiplicativo_30323():
     page = "congmultiplicativo30323"
 
@@ -473,7 +473,7 @@ def congruencial_multiplicativo_30323():
         plt.savefig(plotfile)
         plt.clf()
 
-        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='data')],
+        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='table table-hover')],
                                grafica=plotfile, N=resv1, M=resv2, A=resv3, X0=resv4, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)
     else:
         N = None
