@@ -13,6 +13,7 @@ import pandas as pd
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib
+import datetime
 matplotlib.use('Agg')
 
 vida_real_api = Blueprint('vida_real_api', __name__)
@@ -30,11 +31,11 @@ def vida_real():
             validators=[validators.InputRequired()],
             render_kw=style)
         D = FloatField(
-            label='\( Landa \ \lambda \)', default=1.333,
+            label='\( Landa \ \lambda \)', default=3.00,
             validators=[validators.InputRequired()],
             render_kw=style)
         CO = FloatField(
-            label='\( Nu \ \mu \)', default=4,
+            label='\( Nu \ \mu \)', default=5.50,
             validators=[validators.InputRequired()],
             render_kw=style)
 
