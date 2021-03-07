@@ -69,48 +69,48 @@
 								<li class="dropdown { {% if page == 'index' %} current {% endif %} }">
 									<a href="/">Randoms</a>
 									<ul>
-										<li><a href="{{ url_for('metran_api.cuadrado_medio') }}">Cuadrado medio</a></li>
-										<li><a href="{{ url_for('metran_api.congruencial_aditivo') }}">Congruencial lineal</a></li>
+										<li><a href="{{ url_for('metodo_ramdon_api.cuadrado_medio') }}">Cuadrado medio</a></li>
+										<li><a href="{{ url_for('metodo_ramdon_api.congruencial_aditivo') }}">Congruencial lineal</a></li>
 										<li class="dropdown">
 											<a href="#">Congruencial multiplicativo</a>
 											<ul>
-												<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_autogenerado') }}">Autogenerar valores</a></li>
-												<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_30264') }}">generador excel-03 mod 30264</a></li>
-												<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_30307') }}">generador excel-07 mod 30307</a></li>
-												<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_30323') }}">generador excel-07 mod 30323</a></li>
+												<li><a href="{{ url_for('metodo_ramdon_api.congruencial_multiplicativo_autogenerado') }}">Autogenerar valores</a></li>
+												<li><a href="{{ url_for('metodo_ramdon_api.congruencial_multiplicativo_30264') }}">generador excel-03 mod 30264</a></li>
+												<li><a href="{{ url_for('metodo_ramdon_api.congruencial_multiplicativo_30307') }}">generador excel-07 mod 30307</a></li>
+												<li><a href="{{ url_for('metodo_ramdon_api.congruencial_multiplicativo_30323') }}">generador excel-07 mod 30323</a></li>
 											</ul>
 										</li>
 									</ul>
 								</li>
 								<li class="dropdown { {% if page == 'index2' %} current {% endif %} }">
-									<a href="{{ url_for('index2') }}">Pronóstico</a>
+									<a href="{{ url_for('pronostico') }}">Pronóstico</a>
 									<ul>
-										<li><a href="{{ url_for('metprob_api.promedio_movil') }}">Promedio Móvil</a></li>
-										<li><a href="{{ url_for('metprob_api.alisamiento_exponencial') }}">Alisamiento Exponencial</a></li>
+										<li><a href="{{ url_for('metodo_pronostico_api.promedio_movil') }}">Promedio Móvil</a></li>
+										<li><a href="{{ url_for('metodo_pronostico_api.alisamiento_exponencial') }}">Alisamiento Exponencial</a></li>
 									</ul>
 								</li>
 								<li class="dropdown { {% if page == 'index3' %} current {% endif %} }">
-									<a href="{{ url_for('index3') }}">Regresión</a>
+									<a href="{{ url_for('regresion') }}">Regresión</a>
 									<ul>
-										<li><a href="{{ url_for('metreg_api.regresion_lineal') }}">Lineal</a></li>
-										<li><a href="{{ url_for('metreg_api.regresion_no_lineal') }}">No Lineal</a></li>
+										<li><a href="{{ url_for('metodo_regresion_api.regresion_lineal') }}">Lineal</a></li>
+										<li><a href="{{ url_for('metodo_regresion_api.regresion_no_lineal') }}">No Lineal</a></li>
 									</ul>
 								</li>
 								<li class="dropdown { {% if page == 'index4' %} current {% endif %} }">
-									<a href="{{ url_for('index4') }}">Simulación</a>
+									<a href="{{ url_for('simulacion') }}">Simulación</a>
 									<ul>
 										<li class="dropdown">
 											<a href="#">Método Monte Carlo</a>
 											<ul>
-												<li><a href="{{ url_for('metsim_api.montecarlo_aditivo') }}">Por congruencial lineal</a></li>
-												<li><a href="{{ url_for('metsim_api.montecarlo_multiplicativo') }}">Por congruencial multiplicativo</a></li>
+												<li><a href="{{ url_for('metodo_simulacion_api.montecarlo_aditivo') }}">Por congruencial lineal</a></li>
+												<li><a href="{{ url_for('metodo_simulacion_api.montecarlo_multiplicativo') }}">Por congruencial multiplicativo</a></li>
 											</ul>
 										</li>
 										<li class="dropdown">
 											<a href="#">Método de la transformada inversa</a>
 											<ul>
-												<li><a href="{{ url_for('metsim_api.transformada_inversa_aditivo') }}">Por congruencial lineal</a></li>
-												<li><a href="{{ url_for('metsim_api.transformada_inversa_multiplicativo') }}">Por congruencial multiplicativo</a></li>
+												<li><a href="{{ url_for('metodo_simulacion_api.transformada_inversa_aditivo') }}">Por congruencial lineal</a></li>
+												<li><a href="{{ url_for('metodo_simulacion_api.transformada_inversa_multiplicativo') }}">Por congruencial multiplicativo</a></li>
 											</ul>
 										</li>
 									</ul>
@@ -121,20 +121,23 @@
 										<li class="dropdown">
 											<a href="#">Modelos de inventario</a>
 											<ul>
-												<li><a href="{{ url_for('modsim_api.inventario_EOQ') }}">Modelo EOQ</a></li>
-												<!-- <li><a href="{{ url_for('modsim_api.inventario_general') }}">Simulación del inventario</a></li> -->
-												<!-- <li><a href="{{ url_for('modsim_api.inventario_empresa') }}">Tabla de inventario para caso real</a></li> -->
+												<li><a href="{{ url_for('modelo_simulacion_api.inventario_EOQ') }}">Modelo EOQ</a></li>
+												<!-- <li><a href="{{ url_for('modelo_simulacion_api.inventario_general') }}">Simulación del inventario</a></li> -->
+												<!-- <li><a href="{{ url_for('modelo_simulacion_api.inventario_empresa') }}">Tabla de inventario para caso real</a></li> -->
 											</ul>
 										</li>
 										<li class="dropdown">
 											<a href="#">Modelo de linea de espera</a>
 											<ul>
-												<li><a href="{{ url_for('modsim_api.linea_espera') }}">Valores autogenerados</a></li>
-												<li><a href="{{ url_for('modsim_api.linea_espera_aditivo') }}">Por congruencial lineal</a></li>
-												<li><a href="{{ url_for('modsim_api.linea_espera_multiplicativo') }}">Por congruencial multiplicativo</a></li>
+												<li><a href="{{ url_for('modelo_simulacion_api.linea_espera') }}">Valores autogenerados</a></li>
+												<li><a href="{{ url_for('modelo_simulacion_api.linea_espera_aditivo') }}">Por congruencial lineal</a></li>
+												<li><a href="{{ url_for('modelo_simulacion_api.linea_espera_multiplicativo') }}">Por congruencial multiplicativo</a></li>
 											</ul>
 										</li>
 									</ul>
+								</li>
+								<li class="{ {% if page == 'index6' %} current {% endif %} }">
+									<a href="{{ url_for('vida_real_api.vida_real') }}">Caso real</a>
 								</li>
 							</ul><!-- /.main-nav__navigation-box -->
 						</div><!-- /.main-nav__main-navigation -->	
@@ -182,10 +185,11 @@
 									<h3 class="footer-widget__title">Páginas</h3><!-- /.footer-widget__title -->
 									<ul class="list-unstyled footer-widget__links-list">
 										<li><a href="/">Randoms</a></li>
-										<li><a href="{{ url_for('index2') }}">Probabilísticos</a></li>
-										<li><a href="{{ url_for('index3') }}">Regresión</a></li>
-										<li><a href="{{ url_for('index4') }}">Simulación</a></li>
+										<li><a href="{{ url_for('pronostico') }}">Probabilísticos</a></li>
+										<li><a href="{{ url_for('regresion') }}">Regresión</a></li>
+										<li><a href="{{ url_for('simulacion') }}">Simulación</a></li>
 										<li><a href="{{ url_for('index5') }}">Modelos de simulación</a></li>
+										<li><a href="{{ url_for('vida_real_api.vida_real') }}">Caso real</a></li>
 									</ul><!-- /.list-unstyled footer-widget__links-list -->
 								</div><!-- /.footer-widget footer-widget__links -->
 							</div><!-- /.col-xl-2 col-lg-6 col-md-5 -->
@@ -228,11 +232,9 @@
 				</nav>
 				<p class="side-menu__block__copy">(c) 2021 Brangy Castro - All rights reserved.</p>
 				<div class="side-menu__social">
-					<a href="#"><i class="fab fa-facebook-f"></i></a>
-					<a href="#"><i class="fab fa-google-plus"></i></a>
-					<a href="#"><i class="fab fa-twitter"></i></a>
-					<a href="#"><i class="fab fa-instagram"></i></a>
-					<a href="#"><i class="fab fa-pinterest-p"></i></a>
+					<a href="https://www.facebook.com/brangy.castro/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+					<a href="https://twitter.com/BrangyC" target="_blank"><i class="fab fa-twitter"></i></a>
+					<a href="https://github.com/BrangyCastro" target="_blank"><i class="fab fa-github"></i></a>
 				</div>
 			</div><!-- /.side-menu__block-inner -->
 		</div><!-- /.side-menu__block -->

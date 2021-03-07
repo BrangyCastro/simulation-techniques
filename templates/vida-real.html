@@ -1,0 +1,126 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<section class="page-header page-header__dark" style="background-image: url(/static/assets/images/background/picanteria-bg.png);">
+    <div class="container">
+        <h2>Línea de espera para la <br/> Picantería J&Z</h2>
+    </div><!-- /.container -->
+  </section><!-- /.page-header -->
+  <section class="living-option-one">
+    <div class="container">
+        <div class="history-one__single mb-5">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="history-one__image">
+                        <img src="/static/assets/images/logo-final.png" alt="">
+                    </div><!-- /.history-one__image -->
+                </div><!-- /.col-lg-6 -->
+                <div class="col-lg-6 d-flex">
+                    <div class="my-auto">
+                        <div class="history-one__content">
+                            <div class="block-title text-left">
+                                <p class="has-line">Descripción de la empresa</p>
+                            </div><!-- /.block-title -->
+                            <div class="history-one__text">
+                                <p>La picantería “J&Z” es un establecimiento dedicado a la vente principalmente de encebollado pero tiene un menú para platos a la carta, 
+                                    esta ubicado en la parroquia de Crucita perteneciente a la ciudad de Portoveijo. Su horario de atención es de 06H30 hasta las 14H00
+                                    de lunes a domingo.</p>
+                            </div><!-- /.history-one__text -->
+                        </div><!-- /.history-one__content -->
+                    </div><!-- /.my-auto -->
+                </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+        </div><!-- /.history-one__single -->
+      <div class="mb-4">
+        <div class="tab-pane animated fadeInUp fade show">
+          <div class="row">
+            <div class="col-lg-6">
+              <form method=post action="">
+                {% for field in form %}
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">{{ field.label }}</label>
+                    {{ field }}
+                  </div>
+                {% endfor %}
+                <!-- <input type=submit value=Calcular class="btn btn-primary"> -->
+                <button type="submit" class="btn btn-success btn-block">Calcular</button>
+              </form>
+            </div>
+            <div class="col-lg-6">
+              <div class="living-option-one__content">
+                <p>
+                  El objetivo es encontrar el estado óptimo del sistema y determinar una capacidad de servicio apropiada, Minimizar
+                  el tiempo de atención y servicio
+                  a los clientes o usuarios que llegan en un determinado tiempo. Cuenta con las siguientes relaciones matemáticas:
+                  \[ La \ probabilidad \ de \ hallar \ el \ sistema \ ocupado: \ p=\lambda/\mu \]
+                  \[ La \ probabilidad \ de \ que \ no \ haya \ unidades \ en \ el \ sistema: \ Po=1-\lambda/\mu \]
+                  \[ Promedio \ de \ unidades \ en \ la \ linea \ de \ espera: \ Lq=\lambda^2/(\mu-\lambda)\mu \]
+                  \[ Número \ esperado \ de \ clientes \ en \ el \ sistema: \ L=\lambda/\mu-\lambda \]
+                  \[ Tiempo \ de \ espera \ en \ cola: Wq=\lambda/\mu(\mu-\lambda) \]
+                  \[ El \ tiempo \ promedio \ que \ una \ unidad \ pasa \ en \ el \ sistema: \ W=1/(\mu-\lambda) \]
+                  \[ La \ probabilidad \ de \ que \ haya \ n \ unidades \ en \ el \ sistema: \ Pn=(\lambda/\mu)^n Po \]
+                  \[\]
+                  {% if D != None %}
+                  Para los datos ingresados los resultados serían los siguientes:
+                  \[ La \ probabilidad \ de \ hallar \ el \ sistema \ ocupado: \ {{dato2}} \]
+                  \[ La \ probabilidad \ de \ que \ no \ haya \ unidades \ en \ el \ sistema: \ {{dato3}} \]
+                  \[ Promedio \ de \ unidades \ en \ la \ linea \ de \ espera: \ {{dato4}} \]
+                  \[ Número \ esperado \ de \ clientes \ en \ el \ sistema: \ {{dato5}} \]
+                  \[ Tiempo \ de \ espera \ en \ cola: {{dato7}} \]
+                  \[ El \ tiempo \ promedio \ que \ una \ unidad \ pasa \ en \ el \ sistema: \ {{dato6}} \]
+                  \[ La \ probabilidad \ de \ que \ haya \ n \ unidades \ en \ el \ sistema: \ {{dato8}} \]
+                  {% endif %}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <div class="tab-pane animated fadeInUp fade show">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="living-option-one__content">
+                {% if D != None %}
+                  <h3> Tabla de resultados </h3>
+                  {% for table in tables %}
+                    {{ table|safe }}
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-12 mt-4">
+              <div class="living-option-one__content">
+                {% if D != None %}
+                  <h3> Gráfico de valores </h3>
+                  <img src="{{ grafica }}" width="700" class="grafica">
+                {% endif %}
+              </div><!-- /.living-option-one__content -->
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-12 mt-4">
+              <div class="living-option-one__content">
+                {% if D != None %}
+                  <h3> Tabla de valores acumulados </h3>
+                  {% for table in tables2 %}
+                    {{ table|safe }}
+                  {% endfor %}
+                {% endif %}
+              </div><!-- /.living-option-one__content -->
+            </div><!-- /.col-lg-6 -->
+          </div><!-- /.row -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <style>
+    .grafica {
+      display: block;
+      margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 40%;
+    }
+  </style>
+
+{% endblock %}

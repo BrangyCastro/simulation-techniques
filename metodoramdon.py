@@ -1,63 +1,67 @@
+import xlsxwriter
+import matplotlib.pyplot as plt
 from flask import Blueprint, Flask, render_template, make_response, request, send_file
 from wtforms import Form, FloatField, validators, IntegerField
 from numpy import exp, cos, linspace
 from math import pi
 import io
 import random
-import os, time, glob
+import os
+import time
+import glob
 import numpy as np
 import pandas as pd
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import xlsxwriter
 
 
-metran_api = Blueprint('metran_api', __name__)
+metodo_ramdon_api = Blueprint('metodo_ramdon_api', __name__)
 
-style={'class': 'form-control'}
+style = {'class': 'form-control'}
 
-@metran_api.route('/cuadmedio', methods=("POST", "GET"))
+
+@metodo_ramdon_api.route('/random/cuadmedio', methods=("POST", "GET"))
 def cuadrado_medio():
     class InputForm(Form):
         N = IntegerField(
-            label='Nº de iteraciones (N)', 
+            label='Nº de iteraciones (N)',
             default=10,
             validators=[validators.InputRequired()],
             render_kw=style)
         R = IntegerField(
-            label='Valor inicial o "semilla" (mínimo 3 dígitos) (R)', 
+            label='Valor inicial o "semilla" (mínimo 3 dígitos) (R)',
             default=171,
-            validators=[validators.InputRequired(), validators.NumberRange(min=100)],
+            validators=[validators.InputRequired(
+            ), validators.NumberRange(min=100)],
             render_kw=style)
-    
+
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
-        # Método de los cuadrados medios   
-        n= int(form.N.data)
-        r= int(form.R.data) # seleccionamos el valor inicial r
+        # Método de los cuadrados medios
+        n = int(form.N.data)
+        r = int(form.R.data)  # seleccionamos el valor inicial r
         reserva = int(form.R.data)
-        l=len(str(r)) # determinamos el número de dígitos
-        lista = [] # almacenamos en una lista
+        l = len(str(r))  # determinamos el número de dígitos
+        lista = []  # almacenamos en una lista
         lista2 = []
-        i=1
-        #while len(lista) == len(set(lista)):
+        i = 1
+        # while len(lista) == len(set(lista)):
         while i <= n:
-            x=str(r*r) # Elevamos al cuadrado r
+            x = str(r*r)  # Elevamos al cuadrado r
             if l % 2 == 0:
                 x = x.zfill(l*2)
             else:
                 x = x.zfill(l)
-            y=(len(x)-l)/2
-            y=int(y)
-            r=int(x[y:y+l])
+            y = (len(x)-l)/2
+            y = int(y)
+            r = int(x[y:y+l])
             lista.append(r)
             lista2.append(x)
-            i=i+1
+            i = i+1
 
-        df = pd.DataFrame({'Valores elevados':lista2,'Valor medio':lista})
+        df = pd.DataFrame({'Valores elevados': lista2, 'Valor medio': lista})
         dfres = df['Valores elevados']
         dfres2 = df['Valor medio']
         reserva2 = dfres[0]
@@ -65,7 +69,7 @@ def cuadrado_medio():
         dfrac = df["Valor medio"]/10**l
         df["Valor random"] = dfrac
         reserva4 = dfrac[0]
-        x1=df['Valor random']
+        x1 = df['Valor random']
         plt.plot(x1)
         plt.title('Generador de Numeros Aleatorios Cuadrados Medios')
         plt.xlabel('Serie')
@@ -81,8 +85,8 @@ def cuadrado_medio():
         plotfile = os.path.join('static', str(time.time()) + '.png')
         plt.savefig(plotfile)
         plt.clf()
-        return render_template('/metspages/metran/cuadmedio.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile, N=n, R=r, 
-        res=reserva, res2=reserva2,res3=reserva3,res4=reserva4,res5=l)
+        return render_template('/metspages/metran/cuadmedio.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile, N=n, R=r,
+                               res=reserva, res2=reserva2, res3=reserva3, res4=reserva4, res5=l)
     else:
         N = None
         R = None
@@ -91,9 +95,10 @@ def cuadrado_medio():
         reserva3 = 0
         reserva4 = 0
         res5 = 0
-    return render_template('/metspages/metran/cuadmedio.html', form=form, N=N, R=R, res=reserva, res2=reserva2,res3=reserva3,res4=reserva4, res5=res5)
+    return render_template('/metspages/metran/cuadmedio.html', form=form, N=N, R=R, res=reserva, res2=reserva2, res3=reserva3, res4=reserva4, res5=res5)
 
-@metran_api.route('/congaditivo', methods=("POST", "GET"))
+
+@metodo_ramdon_api.route('/random/congaditivo', methods=("POST", "GET"))
 def congruencial_aditivo():
     class InputForm(Form):
         X0 = IntegerField(
@@ -111,7 +116,7 @@ def congruencial_aditivo():
         M = IntegerField(
             label='Módulo (m)', default=1000,
             validators=[validators.InputRequired()],
-            render_kw=style)    
+            render_kw=style)
         N = IntegerField(
             label='Nº de iteraciones (n)', default=20,
             validators=[validators.InputRequired()],
@@ -136,7 +141,7 @@ def congruencial_aditivo():
             x0 = x[i]
             r[i] = x0 / m
         # llenamos nuestro DataFrame
-        d = {'Número generado': x, 'Valor random': r }
+        d = {'Número generado': x, 'Valor random': r}
         dftemp1 = d['Número generado']
         dftemp2 = d['Valor random']
         resv6 = dftemp1[0]
@@ -145,7 +150,7 @@ def congruencial_aditivo():
         resv9 = dftemp1[1]
         resv10 = dftemp2[1]
         df = pd.DataFrame(data=d)
-        plt.plot(r,marker='o')
+        plt.plot(r, marker='o')
         plt.title('Generador de Numeros Aleatorios ')
         plt.xlabel('Serie')
         plt.ylabel('Aleatorios')
@@ -161,23 +166,25 @@ def congruencial_aditivo():
         plt.savefig(plotfile)
         plt.clf()
         return render_template('/metspages/metran/congaditivo.html', form=form, tables=[df.to_html(classes='data')], grafica=plotfile,
-         N=resv1, M=resv2, A=resv3, X0=resv4, C=resv5,res1=resv6,res2=resv7, res3=resv8,res4=resv9,res5=resv10)
+                               N=resv1, M=resv2, A=resv3, X0=resv4, C=resv5, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10)
     else:
         N = None
         M = None
         A = None
         X0 = None
         C = None
-        resv6= None
+        resv6 = None
         resv7 = None
         resv8 = None
         resv9 = None
         resv10 = None
-    return render_template('/metspages/metran/congaditivo.html', form=form, N=N, M=M, A=A, X0=X0, C=C,res1=resv6,res2=resv7,res3=resv8, res4=resv9, res5=resv10)
+    return render_template('/metspages/metran/congaditivo.html', form=form, N=N, M=M, A=A, X0=X0, C=C, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10)
 
-@metran_api.route('/congmultiplicativo', methods=("POST", "GET"))
+
+@metodo_ramdon_api.route('/random/congmultiplicativo', methods=("POST", "GET"))
 def congruencial_multiplicativo_autogenerado():
     page = "congmultiplicativo"
+
     class InputForm(Form):
         X0 = IntegerField(
             label='Semilla (Xn)', default=123,
@@ -195,7 +202,7 @@ def congruencial_multiplicativo_autogenerado():
             label='Nº de iteraciones (n)', default=20,
             validators=[validators.InputRequired()],
             render_kw=style)
-    
+
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
         # Generador de números aleatorios Congruencia lineal
@@ -216,7 +223,7 @@ def congruencial_multiplicativo_autogenerado():
             x[i] = (a*x0) % m
             x0 = x[i]
             r[i] = x0 / m
-        d = {'Número generado': x, 'Valor random': r }
+        d = {'Número generado': x, 'Valor random': r}
 
         dftemp1 = d['Número generado']
         dftemp2 = d['Valor random']
@@ -227,7 +234,7 @@ def congruencial_multiplicativo_autogenerado():
         resv10 = dftemp2[1]
 
         df = pd.DataFrame(data=d)
-        plt.plot(r,'g-', marker='o',)
+        plt.plot(r, 'g-', marker='o',)
         plt.title('Generador de Numeros Aleatorios ')
         plt.xlabel('Serie')
         plt.ylabel('Aleatorios')
@@ -243,23 +250,25 @@ def congruencial_multiplicativo_autogenerado():
         plt.savefig(plotfile)
         plt.clf()
 
-        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='data')], 
-        grafica=plotfile, N=resv1, M=resv2, A=resv3, X0=resv4,res1=resv6,res2=resv7, res3=resv8,res4=resv9,res5=resv10, page=page )
+        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='data')],
+                               grafica=plotfile, N=resv1, M=resv2, A=resv3, X0=resv4, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)
     else:
         N = None
         M = None
         A = None
         X0 = None
-        resv6= None
+        resv6 = None
         resv7 = None
         resv8 = None
         resv9 = None
         resv10 = None
-    return render_template('/metspages/metran/congmultiplicativo.html', form=form, N=N, M=M, A=A, X0=X0,res1=resv6,res2=resv7,res3=resv8, res4=resv9, res5=resv10, page=page)
+    return render_template('/metspages/metran/congmultiplicativo.html', form=form, N=N, M=M, A=A, X0=X0, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)
 
-@metran_api.route('/congmultiplicativo30264', methods=("POST", "GET"))
+
+@metodo_ramdon_api.route('/random/congmultiplicativo30264', methods=("POST", "GET"))
 def congruencial_multiplicativo_30264():
     page = "congmultiplicativo30264"
+
     class InputForm(Form):
         X0 = IntegerField(
             label='Semilla (Xn)', default=123,
@@ -269,7 +278,7 @@ def congruencial_multiplicativo_30264():
             label='Nº de iteraciones (n)', default=20,
             validators=[validators.InputRequired()],
             render_kw=style)
-    
+
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
         # Generador de números aleatorios Congruencia lineal
@@ -289,7 +298,7 @@ def congruencial_multiplicativo_30264():
             x[i] = (a*x0) % m
             x0 = x[i]
             r[i] = x0 / m
-        d = {'Número generado': x, 'Valor random': r }
+        d = {'Número generado': x, 'Valor random': r}
 
         dftemp1 = d['Número generado']
         dftemp2 = d['Valor random']
@@ -300,7 +309,7 @@ def congruencial_multiplicativo_30264():
         resv10 = dftemp2[1]
 
         df = pd.DataFrame(data=d)
-        plt.plot(r,'g-', marker='o',)
+        plt.plot(r, 'g-', marker='o',)
         plt.title('Generador de Numeros Aleatorios ')
         plt.xlabel('Serie')
         plt.ylabel('Aleatorios')
@@ -316,23 +325,25 @@ def congruencial_multiplicativo_30264():
         plt.savefig(plotfile)
         plt.clf()
 
-        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='data')], 
-        grafica=plotfile, N=resv1, M=resv2, A=resv3, X0=resv4,res1=resv6,res2=resv7, res3=resv8,res4=resv9,res5=resv10, page=page )
+        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='data')],
+                               grafica=plotfile, N=resv1, M=resv2, A=resv3, X0=resv4, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)
     else:
         N = None
         M = None
         A = None
         X0 = None
-        resv6= None
+        resv6 = None
         resv7 = None
         resv8 = None
         resv9 = None
         resv10 = None
-    return render_template('/metspages/metran/congmultiplicativo.html', form=form, N=N, M=M, A=A, X0=X0,res1=resv6,res2=resv7,res3=resv8, res4=resv9, res5=resv10, page=page)
+    return render_template('/metspages/metran/congmultiplicativo.html', form=form, N=N, M=M, A=A, X0=X0, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)
 
-@metran_api.route('/congmultiplicativo30307', methods=("POST", "GET"))
+
+@metodo_ramdon_api.route('/random/congmultiplicativo30307', methods=("POST", "GET"))
 def congruencial_multiplicativo_30307():
     page = "congmultiplicativo30307"
+
     class InputForm(Form):
         X0 = IntegerField(
             label='Semilla (Xn)', default=123,
@@ -342,7 +353,7 @@ def congruencial_multiplicativo_30307():
             label='Nº de iteraciones (n)', default=20,
             validators=[validators.InputRequired()],
             render_kw=style)
-    
+
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
         # Generador de números aleatorios Congruencia lineal
@@ -361,7 +372,7 @@ def congruencial_multiplicativo_30307():
             x[i] = (a*x0) % m
             x0 = x[i]
             r[i] = x0 / m
-        d = {'Número generado': x, 'Valor random': r }
+        d = {'Número generado': x, 'Valor random': r}
 
         dftemp1 = d['Número generado']
         dftemp2 = d['Valor random']
@@ -372,7 +383,7 @@ def congruencial_multiplicativo_30307():
         resv10 = dftemp2[1]
 
         df = pd.DataFrame(data=d)
-        plt.plot(r,'g-', marker='o',)
+        plt.plot(r, 'g-', marker='o',)
         plt.title('Generador de Numeros Aleatorios ')
         plt.xlabel('Serie')
         plt.ylabel('Aleatorios')
@@ -388,23 +399,25 @@ def congruencial_multiplicativo_30307():
         plt.savefig(plotfile)
         plt.clf()
 
-        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='data')], 
-        grafica=plotfile, N=resv1, M=resv2, A=resv3, X0=resv4,res1=resv6,res2=resv7, res3=resv8,res4=resv9,res5=resv10, page=page )
+        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='data')],
+                               grafica=plotfile, N=resv1, M=resv2, A=resv3, X0=resv4, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)
     else:
         N = None
         M = None
         A = None
         X0 = None
-        resv6= None
+        resv6 = None
         resv7 = None
         resv8 = None
         resv9 = None
         resv10 = None
-    return render_template('/metspages/metran/congmultiplicativo.html', form=form, N=N, M=M, A=A, X0=X0,res1=resv6,res2=resv7,res3=resv8, res4=resv9, res5=resv10, page=page)
+    return render_template('/metspages/metran/congmultiplicativo.html', form=form, N=N, M=M, A=A, X0=X0, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)
 
-@metran_api.route('/congmultiplicativo30323', methods=("POST", "GET"))
+
+@metodo_ramdon_api.route('/random/congmultiplicativo30323', methods=("POST", "GET"))
 def congruencial_multiplicativo_30323():
     page = "congmultiplicativo30323"
+
     class InputForm(Form):
         X0 = IntegerField(
             label='Semilla (Xn)', default=123,
@@ -414,7 +427,7 @@ def congruencial_multiplicativo_30323():
             label='Nº de iteraciones (n)', default=20,
             validators=[validators.InputRequired()],
             render_kw=style)
-    
+
     form = InputForm(request.form)
     if request.method == 'POST' and form.validate():
         # Generador de números aleatorios Congruencia lineal
@@ -426,14 +439,14 @@ def congruencial_multiplicativo_30323():
         resv2 = m
         resv3 = a
         resv4 = x0
-        
+
         x = [1] * n
         r = [0.1] * n
         for i in range(0, n):
             x[i] = (a*x0) % m
             x0 = x[i]
             r[i] = x0 / m
-        d = {'Número generado': x, 'Valor random': r }
+        d = {'Número generado': x, 'Valor random': r}
 
         dftemp1 = d['Número generado']
         dftemp2 = d['Valor random']
@@ -444,7 +457,7 @@ def congruencial_multiplicativo_30323():
         resv10 = dftemp2[1]
 
         df = pd.DataFrame(data=d)
-        plt.plot(r,'g-', marker='o',)
+        plt.plot(r, 'g-', marker='o',)
         plt.title('Generador de Numeros Aleatorios ')
         plt.xlabel('Serie')
         plt.ylabel('Aleatorios')
@@ -460,16 +473,16 @@ def congruencial_multiplicativo_30323():
         plt.savefig(plotfile)
         plt.clf()
 
-        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='data')], 
-        grafica=plotfile, N=resv1, M=resv2, A=resv3, X0=resv4,res1=resv6,res2=resv7, res3=resv8,res4=resv9,res5=resv10, page=page )
+        return render_template('/metspages/metran/congmultiplicativo.html', form=form, tables=[df.to_html(classes='data')],
+                               grafica=plotfile, N=resv1, M=resv2, A=resv3, X0=resv4, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)
     else:
         N = None
         M = None
         A = None
         X0 = None
-        resv6= None
+        resv6 = None
         resv7 = None
         resv8 = None
         resv9 = None
         resv10 = None
-    return render_template('/metspages/metran/congmultiplicativo.html', form=form, N=N, M=M, A=A, X0=X0,res1=resv6,res2=resv7,res3=resv8, res4=resv9, res5=resv10, page=page )
+    return render_template('/metspages/metran/congmultiplicativo.html', form=form, N=N, M=M, A=A, X0=X0, res1=resv6, res2=resv7, res3=resv8, res4=resv9, res5=resv10, page=page)

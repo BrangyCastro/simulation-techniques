@@ -17,12 +17,12 @@ import matplotlib
 matplotlib.use('Agg')
 
 
-metsim_api = Blueprint('metsim_api', __name__)
+metodo_simulacion_api = Blueprint('metodo_simulacion_api', __name__)
 
 style = {'class': 'form-control', "rows": 3}
 
 
-@metsim_api.route('/montecarloaditivo', methods=("POST", "GET"))
+@metodo_simulacion_api.route('/simulacion/montecarloaditivo', methods=("POST", "GET"))
 def montecarlo_aditivo():
     page = "montecarloaditivo"
 
@@ -156,7 +156,7 @@ def montecarlo_aditivo():
     return render_template('/metspages/metsim/montecarlo.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica, suma=suma, vald1=vald1, cant=cant, dfprob=dfprob, page=page)
 
 
-@metsim_api.route('/montecarlomultiplicativo', methods=("POST", "GET"))
+@metodo_simulacion_api.route('/simulacion/montecarlomultiplicativo', methods=("POST", "GET"))
 def montecarlo_multiplicativo():
     page = "montecarlomultiplicativo"
 
@@ -287,7 +287,7 @@ def montecarlo_multiplicativo():
     return render_template('/metspages/metsim/montecarlo.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica, suma=suma, vald1=vald1, cant=cant, dfprob=dfprob, page=page)
 
 
-@metsim_api.route('/transinversaditivo', methods=("POST", "GET"))
+@metodo_simulacion_api.route('/simulacion/transinversaditivo', methods=("POST", "GET"))
 def transformada_inversa_aditivo():
     page = "transinversaditivo"
 
@@ -361,7 +361,7 @@ def transformada_inversa_aditivo():
     return render_template('/metspages/metsim/transinversa.html', form=form, L=L, N=N, M=M, A=A, X0=X0, C=C, grafica=grafica, page=page)
 
 
-@metsim_api.route('/transinversamultiplicativo', methods=("POST", "GET"))
+@metodo_simulacion_api.route('/simulacion/transinversamultiplicativo', methods=("POST", "GET"))
 def transformada_inversa_multiplicativo():
     page = "transinversamultiplicativo"
 

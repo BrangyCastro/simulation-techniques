@@ -3,37 +3,43 @@ import io
 
 
 from flask import Flask, render_template, make_response
-from metsim import metsim_api
-from metran import metran_api
-from modsim import modsim_api
-from metprob import metprob_api
-from metreg import metreg_api
-
+from metodoramdon import metodo_ramdon_api
+from metodopronostico import metodo_pronostico_api
+from metodoregresion import metodo_regresion_api
+from metodosimulacion import metodo_simulacion_api
+from modelosimulacion import modelo_simulacion_api
+from vidareal import vida_real_api
 
 app = Flask(__name__)
 
-app.register_blueprint(metsim_api)
-app.register_blueprint(metran_api)
-app.register_blueprint(modsim_api)
-app.register_blueprint(metprob_api)
-app.register_blueprint(metreg_api)
+app.register_blueprint(metodo_ramdon_api)
+app.register_blueprint(metodo_pronostico_api)
+app.register_blueprint(metodo_regresion_api)
+app.register_blueprint(metodo_simulacion_api)
+app.register_blueprint(modelo_simulacion_api)
+app.register_blueprint(vida_real_api)
+
 
 @app.route('/')
 def home():
-    return render_template('index.html', page="index")
+    return render_template('random.html', page="index")
 
-@app.route('/index2')
-def index2():
-    return render_template('index2.html', page="index2")
-    
-@app.route('/index3')
-def index3():
-    return render_template('index3.html', page="index3")
-    
-@app.route('/index4')
-def index4():
-    return render_template('index4.html', page="index4")
-    
+
+@app.route('/pronostico')
+def pronostico():
+    return render_template('pronostico.html', page="index2")
+
+
+@app.route('/regresion')
+def regresion():
+    return render_template('regresion.html', page="index3")
+
+
+@app.route('/simulacion')
+def simulacion():
+    return render_template('simulacion.html', page="index4")
+
+
 @app.route('/index5')
 def index5():
     return render_template('index5.html', page="index5")

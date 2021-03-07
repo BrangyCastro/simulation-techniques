@@ -16,12 +16,12 @@ import matplotlib
 matplotlib.use('Agg')
 
 
-metprob_api = Blueprint('metprob_api', __name__)
+metodo_pronostico_api = Blueprint('metodo_pronostico_api', __name__)
 
 style = {'class': 'form-control'}
 
 
-@metprob_api.route('/prommovil', methods=("POST", "GET"))
+@metodo_pronostico_api.route('/pronostico/prommovil', methods=("POST", "GET"))
 def promedio_movil():
     class InputForm(Form):
         N = TextAreaField(
@@ -114,7 +114,7 @@ def promedio_movil():
                            res2=resv2, res3=resv3, res4=resv4, res5=resv5, res6=resv6, res7=resv7, res8=resv8)
 
 
-@metprob_api.route('/alisexponencial', methods=("POST", "GET"))
+@metodo_pronostico_api.route('/pronostico/alisexponencial', methods=("POST", "GET"))
 def alisamiento_exponencial():
     class InputForm(Form):
         N = TextAreaField(

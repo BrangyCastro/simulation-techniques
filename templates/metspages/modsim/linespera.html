@@ -15,9 +15,9 @@
 <section class="living-option-one">
   <div class="container">
     <ul class="nav nav-tabs">
-      <li class="nav-item"><a href="{{ url_for('modsim_api.linea_espera') }}" class="nav-link { {% if page == 'lineaespera' %} active {% endif %} }">Valores autogenerados</a></li>
-			<li class="nav-item"><a href="{{ url_for('modsim_api.linea_espera_aditivo') }}" class="nav-link { {% if page == 'lineaesperaaditivo' %} active {% endif %} }">Por congruencial lineal</a></li>
-      <li class="nav-item"><a href="{{ url_for('modsim_api.linea_espera_multiplicativo') }}" class="nav-link { {% if page == 'lineaesperamultiplicativo' %} active {% endif %} }">Por congruencial multiplicativo</a></li>
+      <li class="nav-item"><a href="{{ url_for('modelo_simulacion_api.linea_espera') }}" class="nav-link { {% if page == 'lineaespera' %} active {% endif %} }">Valores autogenerados</a></li>
+			<li class="nav-item"><a href="{{ url_for('modelo_simulacion_api.linea_espera_aditivo') }}" class="nav-link { {% if page == 'lineaesperaaditivo' %} active {% endif %} }">Por congruencial lineal</a></li>
+      <li class="nav-item"><a href="{{ url_for('modelo_simulacion_api.linea_espera_multiplicativo') }}" class="nav-link { {% if page == 'lineaesperamultiplicativo' %} active {% endif %} }">Por congruencial multiplicativo</a></li>
     </ul><!-- /.nav-tabs -->
     <div class="mb-4">
       <div class="tab-pane animated fadeInUp fade show">

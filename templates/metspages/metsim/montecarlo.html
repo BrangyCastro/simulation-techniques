@@ -6,7 +6,7 @@
   <div class="container">
       <h2>Método Monte Carlo</h2>
       <ul class="list-unstyled thm-breadcrumb">
-          <li><a href="{{ url_for('index4') }}">Métodos de Simulación</a></li>
+          <li><a href="{{ url_for('simulacion') }}">Métodos de Simulación</a></li>
           <li><span>Método Monte Carlo</span></li>
       </ul><!-- /.list-unstyled -->
   </div><!-- /.container -->
@@ -15,8 +15,8 @@
 <section class="living-option-one">
   <div class="container">
     <ul class="nav nav-tabs">
-      <li class="nav-item"><a href="{{ url_for('metsim_api.montecarlo_aditivo') }}" class="nav-link { {% if page == 'montecarloaditivo' %} active {% endif %} }">Por congruencial lineal</a></li>
-			<li class="nav-item"><a href="{{ url_for('metsim_api.montecarlo_multiplicativo') }}" class="nav-link { {% if page == 'montecarlomultiplicativo' %} active {% endif %} }">Por congruencial multiplicativo</a></li>
+      <li class="nav-item"><a href="{{ url_for('metodo_simulacion_api.montecarlo_aditivo') }}" class="nav-link { {% if page == 'montecarloaditivo' %} active {% endif %} }">Por congruencial lineal</a></li>
+			<li class="nav-item"><a href="{{ url_for('metodo_simulacion_api.montecarlo_multiplicativo') }}" class="nav-link { {% if page == 'montecarlomultiplicativo' %} active {% endif %} }">Por congruencial multiplicativo</a></li>
     </ul><!-- /.nav-tabs -->
     <div class="mb-4">
       <div class="tab-pane animated fadeInUp fade show">

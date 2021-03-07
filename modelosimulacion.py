@@ -16,12 +16,12 @@ import matplotlib
 matplotlib.use('Agg')
 
 
-modsim_api = Blueprint('modsim_api', __name__)
+modelo_simulacion_api = Blueprint('modelo_simulacion_api', __name__)
 
 style = {'class': 'form-control', "rows": 3}
 
 
-@modsim_api.route('/inventarioEOQ', methods=("POST", "GET"))
+@modelo_simulacion_api.route('/inventarioEOQ', methods=("POST", "GET"))
 def inventario_EOQ():
     class InputForm(Form):
         D = FloatField(
@@ -137,7 +137,7 @@ def inventario_EOQ():
     return render_template('/metspages/modsim/inventeoq.html', form=form, D=D, CO=CO, CH=CH, P=P, TE=TE, DA=DA)
 
 
-@modsim_api.route('/inventariogeneral', methods=("POST", "GET"))
+@modelo_simulacion_api.route('/inventariogeneral', methods=("POST", "GET"))
 def inventario_general():
     class InputForm(Form):
         D = IntegerField(
@@ -322,7 +322,7 @@ def inventario_general():
     return render_template('/metspages/modsim/inventgen.html', form=form, D=D, CO=CO, P=P, TE=TE, DA=DA, PE=PE, CI=CI)
 
 
-@modsim_api.route('/inventarioEMPRESA', methods=("POST", "GET"))
+@modelo_simulacion_api.route('/inventarioEMPRESA', methods=("POST", "GET"))
 def inventario_empresa():
     class InputForm(Form):
         D = IntegerField(
@@ -564,7 +564,7 @@ def inventario_empresa():
     return render_template('/metspages/modsim/invtpaez.html', form=form, D=D, CO=CO, CH=CH, P=P, TE=TE, DA=DA)
 
 
-@modsim_api.route('/lineaespera', methods=("POST", "GET"))
+@modelo_simulacion_api.route('/lineaespera', methods=("POST", "GET"))
 def linea_espera():
     page = "lineaespera"
 
@@ -645,8 +645,8 @@ def linea_espera():
             if i == 0:
                 dfLE['ALL'][i] = random.random()
                 dfLE['ASE'][i] = random.random()
-                dfLE['TILL'][i] = -landa*np.log(dfLE['ALL'][i])
-                dfLE['TISE'][i] = -nu*np.log(dfLE['ASE'][i])
+                dfLE['TILL'][i] = -1/landa*np.log(dfLE['ALL'][i])
+                dfLE['TISE'][i] = -1/nu*np.log(dfLE['ASE'][i])
                 dfLE['TIRLL'][i] = dfLE['TILL'][i]
                 dfLE['TIISE'][i] = dfLE['TIRLL'][i]
                 dfLE['TIFSE'][i] = dfLE['TIISE'][i] + dfLE['TISE'][i]
@@ -654,8 +654,8 @@ def linea_espera():
             else:
                 dfLE['ALL'][i] = random.random()
                 dfLE['ASE'][i] = random.random()
-                dfLE['TILL'][i] = -landa*np.log(dfLE['ALL'][i])
-                dfLE['TISE'][i] = -nu*np.log(dfLE['ASE'][i])
+                dfLE['TILL'][i] = -1/landa*np.log(dfLE['ALL'][i])
+                dfLE['TISE'][i] = -1/nu*np.log(dfLE['ASE'][i])
                 dfLE['TIRLL'][i] = dfLE['TILL'][i] + dfLE['TIRLL'][i-1]
                 dfLE['TIISE'][i] = max(dfLE['TIRLL'][i], dfLE['TIFSE'][i-1])
                 dfLE['TIFSE'][i] = dfLE['TIISE'][i] + dfLE['TISE'][i]
@@ -691,7 +691,7 @@ def linea_espera():
     return render_template('/metspages/modsim/linespera.html', form=form, D=D, CO=CO, CH=CH, page=page)
 
 
-@modsim_api.route('/lineaesperaaditivo', methods=("POST", "GET"))
+@modelo_simulacion_api.route('/lineaesperaaditivo', methods=("POST", "GET"))
 def linea_espera_aditivo():
     page = "lineaesperaaditivo"
 
@@ -804,8 +804,8 @@ def linea_espera_aditivo():
             if i == 0:
                 dfLE['ALL'][i] = dfran['ri'][i]
                 dfLE['ASE'][i] = dfran['ri'][i+numClientes]
-                dfLE['TILL'][i] = -landa*np.log(dfLE['ALL'][i])
-                dfLE['TISE'][i] = -nu*np.log(dfLE['ASE'][i])
+                dfLE['TILL'][i] = -1/landa*np.log(dfLE['ALL'][i])
+                dfLE['TISE'][i] = -1/nu*np.log(dfLE['ASE'][i])
                 dfLE['TIRLL'][i] = dfLE['TILL'][i]
                 dfLE['TIISE'][i] = dfLE['TIRLL'][i]
                 dfLE['TIFSE'][i] = dfLE['TIISE'][i] + dfLE['TISE'][i]
@@ -813,8 +813,8 @@ def linea_espera_aditivo():
             else:
                 dfLE['ALL'][i] = dfran['ri'][i]
                 dfLE['ASE'][i] = dfran['ri'][i+numClientes]
-                dfLE['TILL'][i] = -landa*np.log(dfLE['ALL'][i])
-                dfLE['TISE'][i] = -nu*np.log(dfLE['ASE'][i])
+                dfLE['TILL'][i] = -1/landa*np.log(dfLE['ALL'][i])
+                dfLE['TISE'][i] = -1/nu*np.log(dfLE['ASE'][i])
                 dfLE['TIRLL'][i] = dfLE['TILL'][i] + dfLE['TIRLL'][i-1]
                 dfLE['TIISE'][i] = max(dfLE['TIRLL'][i], dfLE['TIFSE'][i-1])
                 dfLE['TIFSE'][i] = dfLE['TIISE'][i] + dfLE['TISE'][i]
@@ -854,7 +854,7 @@ def linea_espera_aditivo():
     return render_template('/metspages/modsim/linespera.html', form=form, D=D, CO=CO, CH=CH, M=M, A=A, X0=X0, C=C, page=page)
 
 
-@modsim_api.route('/lineaesperamultiplicativo', methods=("POST", "GET"))
+@modelo_simulacion_api.route('/lineaesperamultiplicativo', methods=("POST", "GET"))
 def linea_espera_multiplicativo():
     page = "lineaesperamultiplicativo"
 
@@ -961,8 +961,8 @@ def linea_espera_multiplicativo():
             if i == 0:
                 dfLE['ALL'][i] = dfran['ri'][i]
                 dfLE['ASE'][i] = dfran['ri'][i+numClientes]
-                dfLE['TILL'][i] = -landa*np.log(dfLE['ALL'][i])
-                dfLE['TISE'][i] = -nu*np.log(dfLE['ASE'][i])
+                dfLE['TILL'][i] = -1/landa*np.log(dfLE['ALL'][i])
+                dfLE['TISE'][i] = -1/nu*np.log(dfLE['ASE'][i])
                 dfLE['TIRLL'][i] = dfLE['TILL'][i]
                 dfLE['TIISE'][i] = dfLE['TIRLL'][i]
                 dfLE['TIFSE'][i] = dfLE['TIISE'][i] + dfLE['TISE'][i]
@@ -970,8 +970,8 @@ def linea_espera_multiplicativo():
             else:
                 dfLE['ALL'][i] = dfran['ri'][i]
                 dfLE['ASE'][i] = dfran['ri'][i+numClientes]
-                dfLE['TILL'][i] = -landa*np.log(dfLE['ALL'][i])
-                dfLE['TISE'][i] = -nu*np.log(dfLE['ASE'][i])
+                dfLE['TILL'][i] = -1/landa*np.log(dfLE['ALL'][i])
+                dfLE['TISE'][i] = -1/nu*np.log(dfLE['ASE'][i])
                 dfLE['TIRLL'][i] = dfLE['TILL'][i] + dfLE['TIRLL'][i-1]
                 dfLE['TIISE'][i] = max(dfLE['TIRLL'][i], dfLE['TIFSE'][i-1])
                 dfLE['TIFSE'][i] = dfLE['TIISE'][i] + dfLE['TISE'][i]

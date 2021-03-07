@@ -15,12 +15,12 @@ from matplotlib.figure import Figure
 import matplotlib
 matplotlib.use('Agg')
 
-metreg_api = Blueprint('metreg_api', __name__)
+metodo_regresion_api = Blueprint('metodo_regresion_api', __name__)
 
 style = {'class': 'form-control', "rows": 3}
 
 
-@metreg_api.route('/reglineal', methods=("POST", "GET"))
+@metodo_regresion_api.route('/regresion/lineal', methods=("POST", "GET"))
 def regresion_lineal():
     class InputForm(Form):
         N = TextAreaField(
@@ -113,7 +113,7 @@ def regresion_lineal():
     return render_template('/metspages/metreg/reglineal.html', form=form, N=N, M=M, cant=cant, sum1=sum1, sum2=sum2, sum3=sum3, sum4=sum4, P0=P0, P1=P1, fin=fin)
 
 
-@metreg_api.route('/regnolineal', methods=("POST", "GET"))
+@metodo_regresion_api.route('/regresion/nolineal', methods=("POST", "GET"))
 def regresion_no_lineal():
     class InputForm(Form):
         N = TextAreaField(
