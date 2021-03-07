@@ -54,9 +54,11 @@
 							<div class="living-option-one__content">
 								{% if N != None %}
 									<h3> Tabla de valores randoms</h3>
-									{% for table in tables %}
-										{{ table|safe }}
-									{% endfor %}
+									<div class="table-responsive">
+										{% for table in tables %}
+											{{ table|safe }}
+										{% endfor %}
+									</div>
 								{% endif %}
 							</div>
 						</div><!-- /.col-lg-6 -->

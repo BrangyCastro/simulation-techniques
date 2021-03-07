@@ -62,10 +62,12 @@
             <div class="living-option-one__content">
               {% if N != None %}
                 <h3>Tabla de promedios</h3>
-                {% for table in tables %}
-                  {{ table|safe }}
-                {% endfor %}
-              {% endif %}
+                <div class="table-responsive">
+                  {% for table in tables %}
+                    {{ table|safe }}
+                  {% endfor %}
+                {% endif %}
+                </div>
             </div>
           </div>
           <div class="col-lg-6">
