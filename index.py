@@ -9,6 +9,7 @@ from metodoregresion import metodo_regresion_api
 from metodosimulacion import metodo_simulacion_api
 from modelosimulacion import modelo_simulacion_api
 from vidareal import vida_real_api
+from estadistico import estadistico_api
 
 app = Flask(__name__)
 
@@ -18,6 +19,7 @@ app.register_blueprint(metodo_regresion_api)
 app.register_blueprint(metodo_simulacion_api)
 app.register_blueprint(modelo_simulacion_api)
 app.register_blueprint(vida_real_api)
+app.register_blueprint(estadistico_api)
 
 
 @app.route('/')
@@ -46,4 +48,4 @@ def index5():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

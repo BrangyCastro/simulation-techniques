@@ -86,6 +86,9 @@
 										</li>
 									</ul>
 								</li>
+								<li class="{ {% if page == 'index7' %} current {% endif %} }">
+									<a href="{{ url_for('estadistico_api.estadistico') }}">Estadística</a>
+								</li>
 								<li class="dropdown { {% if page == 'index2' %} current {% endif %} }">
 									<a href="{{ url_for('pronostico') }}">Pronóstico</a>
 									<ul>
@@ -136,12 +139,10 @@
 												<li><a href="{{ url_for('modelo_simulacion_api.linea_espera') }}">Valores autogenerados</a></li>
 												<li><a href="{{ url_for('modelo_simulacion_api.linea_espera_aditivo') }}">Por congruencial lineal</a></li>
 												<li><a href="{{ url_for('modelo_simulacion_api.linea_espera_multiplicativo') }}">Por congruencial multiplicativo</a></li>
+												<li><a href="{{ url_for('vida_real_api.vida_real') }}">Caso real</a></li>
 											</ul>
 										</li>
 									</ul>
-								</li>
-								<li class="{ {% if page == 'index6' %} current {% endif %} }">
-									<a href="{{ url_for('vida_real_api.vida_real') }}">Caso real</a>
 								</li>
 							</ul><!-- /.main-nav__navigation-box -->
 						</div><!-- /.main-nav__main-navigation -->	
